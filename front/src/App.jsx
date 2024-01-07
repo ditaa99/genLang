@@ -1,3 +1,41 @@
+// // import React from 'react';
+// import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+// // import Home from './Home';
+// // import DataDisplay from './DataDisplay';
+
+// function App() {
+//   return (
+//     <Router>
+//       <div>
+//         <nav>
+//           <ul>
+//             <li>
+//               <Link to="/">Home</Link>
+//             </li>
+//             <li>
+//               <Link to="/data">Data Display</Link>
+//             </li>
+//           </ul>
+//         </nav>
+
+//         <hr />
+
+//         <Switch>
+//           <Route exact path="/">
+//             {/* <Home /> */}
+//           </Route>
+//           <Route path="/data">
+//             {/* <DataDisplay /> */}
+//           </Route>
+//         </Switch>
+//       </div>
+//     </Router>
+//   );
+// }
+
+// export default App;
+
+
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -9,10 +47,10 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" >
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <a href="https://react.dev" >
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
