@@ -23,7 +23,7 @@ This educational software provides a platform for students to explore and visual
 - Interactive grammar input and processing.
 - Educational content to assist students in learning key concepts.
 - Backend logic implemented in Python.
-- Frontend designed using React or JavaScript.
+- Frontend designed using React.
 
 ## Technologies Used
 
@@ -36,8 +36,8 @@ This educational software provides a platform for students to explore and visual
 
 ### Prerequisites
 
-- Python installed (version x.x.x)
-- Node.js and npm installed (for React projects)
+- Python installed (version 3.12.1)
+- Node.js and npm installed
 - Git installed
 
 ### Installation
@@ -60,6 +60,7 @@ This educational software provides a platform for students to explore and visual
 4. Navigate to the frontend directory (if using React).
 
     ```bash
+    cd ..
     cd front
     ```
 
@@ -80,9 +81,10 @@ This educational software provides a platform for students to explore and visual
 
    The backend will be accessible at http://127.0.0.1:5000/.
 
-2. Start the React frontend (if using React).
+2. Start the React frontend.
 
     ```bash
+    cd ..
     cd front
     npm start
     ```
