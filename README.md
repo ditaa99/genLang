@@ -57,7 +57,7 @@ This educational software provides a platform for students to explore and visual
     pip install Flask
     ```
 
-4. Navigate to the frontend directory (if using React).
+4. Navigate to the frontend directory .
 
     ```bash
     cd ..
@@ -76,7 +76,7 @@ This educational software provides a platform for students to explore and visual
 
     ```bash
     cd back
-    python run.py
+    python app.py
     ```
 
    The backend will be accessible at http://127.0.0.1:5000/.
