@@ -86,7 +86,7 @@ This educational software provides a platform for students to explore and visual
     ```bash
     cd ..
     cd front
-    npm start
+    npm start or npm run dev
     ```
 
    The frontend will be accessible at http://localhost:3000/.
