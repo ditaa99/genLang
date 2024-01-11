@@ -13,7 +13,7 @@ def run_python_code():
         if 'inputData' in data:
             user_input = data['inputData']
 
-            # Your Python code logic here
+            # make all upper case
             modified_result = f"Modified: {user_input.upper()}"
 
             return jsonify({'result': modified_result})
