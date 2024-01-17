@@ -33,11 +33,18 @@ const YourReactComponent = () => {
     </div>
 
     <div className="symb_rules">
-      <div className="symbols">
-        <p>Terminal symbols:</p>
-        <p>Nonterminal symbols:</p>
-        <p>Starting symbol:</p>
-      </div>
+    <div className="symbols">
+      <p>Terminal symbols: 
+        <input type="text"  style={{border: "none", borderBottom: "1px solid black"}} />
+      </p>
+      <p>Nonterminal symbols:  
+        <input type="text" style={{border: "none", borderBottom: "1px solid black"}} />
+      </p>
+      <p>Starting symbol: 
+        <input type="text"  style={{border: "none", borderBottom: "1px solid black", width:"30px"}} />
+      </p>
+    </div>
+
       <div className="rules">
         <button>New</button>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus inventore sapiente doloribus deleniti suscipit sunt harum veritatis corrupti assumenda aliquid tenetur earum dolor mollitia, delectus dolore incidunt, neque ipsa eius.</p>
