@@ -27,8 +27,8 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  padding: 10px 0 10px 20px;
-  background-color: #f0f0f0;
+  padding: 5px 0 5px 20px;
+  background-color: #636881;
 }
 
 .menu-item {
@@ -36,7 +36,7 @@
   border: none;
   border-radius: 5px;
   background-color: #f0f0f0;
-  color: black;
+  color: #262938;
   font-family: sans-serif;
   /* font-weight: bold; */
   cursor: pointer;
@@ -46,8 +46,9 @@
 }
 
 .menu-item:hover {
-  border-color: #969595;
-  box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.4);
+  border-color: #676666;
+  color: #191e34;
+  box-shadow: 5px 5px 10px 2px rgba(0,0,0,0.4);
 }
 
 .symb_rules {
