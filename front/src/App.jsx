@@ -64,9 +64,9 @@ const YourReactComponent = () => {
         </div>
 
         <div className="rules">
-        <button type="button" value="New" className="btn">
-          New
-        </button>
+          <button type="button" value="New" className="btn">
+            New
+          </button>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
             inventore sapiente doloribus deleniti suscipit sunt harum veritatis
