@@ -124,3 +124,9 @@ textarea {
   color: #191e34;
   box-shadow: 5px 5px 10px 2px #191e3473;
 }
+
+.rules-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
