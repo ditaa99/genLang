@@ -1,8 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import "./index.css";
+// import { Route} from "react-router-dom";
+// import { Router, Routes, Route} from "react-router-dom";
+import Menu from "./components/menu";
+// import Info from "./components/Info";
 
-const YourReactComponent = () => {
+const App = () => {
   const [result, setResult] = useState("");
 
   const handleClick = async () => {
@@ -24,20 +28,7 @@ const YourReactComponent = () => {
 
   return (
     <div className="App">
-      <div className="menu">
-        <button type="button" value="Save" className="menu-item">
-          Save
-        </button>
-        <button type="button" value="Import" className="menu-item">
-          Import
-        </button>
-        <button type="button" value="Examples" className="menu-item">
-          Examples
-        </button>
-        <button type="button" value="Help" className="menu-item">
-          Help
-        </button>
-      </div>
+      <Menu />
 
       <div className="symb_rules">
         <div className="symbols">
@@ -70,9 +61,7 @@ const YourReactComponent = () => {
               New
             </button>
           </div>
-          <p>
-            [backend will do the rest, inputting new sets of rules]
-          </p>
+          <p>[backend will do the rest, inputting new sets of rules]</p>
         </div>
       </div>
       <div className="solution">
@@ -88,8 +77,16 @@ const YourReactComponent = () => {
         <button onClick={handleClick}>Run Python Code</button>
         <div>Result: {result}</div>
       </div>
+
+
+      {/* <Router>
+      <Routes>
+        <Route path="/info" element={<Info />} />
+        <Route path="/" element={<Menu />} />
+      </Routes>
+    </Router> */}
     </div>
   );
 };
 
-export default YourReactComponent;
+export default App;
