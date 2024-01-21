@@ -64,14 +64,14 @@ const Info = () => {
           <br /> All Rights Reserved.
         </p>
         <a
-          href="https://www.linkedin.com/in/your-linkedin-profile"
+          href="https://github.com/ditaa99"
           target="_blank"
           rel="noopener noreferrer"
         >
           <img src={git} alt="GitHub Logo" className="logo" />
         </a>
         <a
-          href="https://www.linkedin.com/in/your-linkedin-profile"
+          href="https://www.linkedin.com/in/dita-pelaj/"
           target="_blank"
           rel="noopener noreferrer"
         >
