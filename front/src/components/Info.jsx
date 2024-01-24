@@ -53,6 +53,8 @@ const Info = () => {
           😊
         </p>
 
+        <p>[more about the syntax comes later]</p>
+
         <div className="imgContainer">
           <img src={icon} alt="Icon" className="icon" />
         </div>

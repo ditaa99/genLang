@@ -40,7 +40,7 @@ const Home = () => {
 
         <div className="rules">
           <div className="rules-top">
-            <p>Rules:</p>
+            <p className="label">Rules:</p>
             <button type="button" value="New" className="btn">
               New
             </button>
@@ -55,7 +55,7 @@ const Home = () => {
         {/* <input type='text' id='generate' name='generate' /> */}
       </div>
       <div className="lang">
-        <p>Lanugage:</p>
+        <p className="label">Lanugage:</p>
       </div>
       <div style={{ display: "none" }}>
         {/* <button onClick={handleClick}>Run Python Code</button> */}
