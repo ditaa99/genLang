@@ -1,3 +1,57 @@
 .examples{
     width: 98%;
+    font-family: 'Arial', sans-serif;
 }
+
+  
+  /* .app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  } */
+
+  
+  /* GrammarDisplay.css */
+.example1 {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #555;
+  }
+  
+  h3 {
+    color: #333;
+  }
+
+  .tabbed{
+    margin-left: 45%;
+  }
+  .arrow {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .arrow::before {
+    content: '\2192'; /* Unicode for right arrow */
+    position: relative;
+  }
+  
+  .arrow::after {
+    content: '#1';
+    font-size: smaller;
+    position: absolute;
+    top: -5px; /* Adjust as needed */
+    left: calc(50% - width /2); /* Center the label */
+  }
+  
+  
+  p {
+    color: #555;
+    line-height: 1.5;
+  }
+  
