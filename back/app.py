@@ -6,6 +6,8 @@ CORS(app)  # Enable CORS for all routes
 
 @app.route('/', methods=['POST'])
 def run_python_code():
+
+    print("Hello :)")
     try:
         data = request.get_json()
 
