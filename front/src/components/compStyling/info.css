@@ -16,7 +16,7 @@
 
 ul {
   list-style-type: none;
-  color: #333;
+  color: #444444;
 }
 
 .input-list li {
@@ -25,12 +25,13 @@ ul {
   padding: 5px;
 }
 
-button {
+
+/* button {
   color: white;
   background-color: #333;
   border: none;
   padding: 10px 20px;
-}
+} */
 
 .imgContainer {
   margin-top: 20px;
