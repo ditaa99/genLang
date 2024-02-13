@@ -27,19 +27,40 @@ const Examples = () => {
     <div className="examples">
       <Menu />
       <div className="example1">
+      <h3>Type 0: General Grammars</h3>
+      <p>
+          If given a grammar like this:
+          <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S,
+          &#123; &#125;〉
+        </p>
+
+      <h3>Type 1: Context-dependent Grammars</h3>
+      <p>
+          If given a grammar like this:
+          <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S,
+          &#123; &#125;〉
+        </p>
+
+      <h3>Type 2: Context-independent Grammars</h3>
+      <p>
+          If given a grammar like this:
+          <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S,
+          &#123; &#125;〉
+        </p>
+
         <h3>Type 3: Regular Grammar</h3>
         <p>
           If given a grammar like this:
           <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S,
           &#123;S&#x2192;aS| aB, B&#x2192;b | aS | bA, A&#x2192;a&#125;〉
         </p>
-        <div>
+        {/* <div>
           <p>[ &#x2192; ]</p>
           <var className="array">
             &#x2192;<span>a</span>
           </var>
         </div>
-        <CustomArrow overArr="a" />
+        <CustomArrow overArr="a" /> */}
         {/* <div className="equation">
           <div className="equation-content">
             <span className="equation-part">A</span>
@@ -94,6 +115,7 @@ const Examples = () => {
           </b>
         </p>
       </div>
+      
     </div>
   );
 };

@@ -34,19 +34,6 @@ h3 {
   position: relative;
 }
 
-.arrow::before {
-  content: "\2192"; /* Unicode for right arrow */
-  position: relative;
-}
-
-.arrow::after {
-  content: "#1";
-  font-size: smaller;
-  position: absolute;
-  top: -5px; /* Adjust as needed */
-  left: calc(50% - width / 2); /* Center the label */
-}
-
 p {
   color: #555;
   line-height: 1.5;
@@ -61,69 +48,3 @@ var.array span {
   margin-left: -2em; /* shift the arrow back over the letter */
   vertical-align: 0.7em; /* tune the arrow vertical position */
 }
-
-/*   
-  .equation {
-    display: flex;
-    align-items: center;
-    text-align: center;
-  }
-  
-  .equation-content {
-    display: flex;
-    align-items: center;
-  }
-  
-  .equation-part {
-    margin: 0 10px; 
-  }
-  
-  .arrow {
-    position: relative;
-  }
-  
-  .rule-label {
-    position: absolute;
-    top: -0.1em; 
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .rectcontainer {
-    margin-top: 3px;
-    height: 20px; 
-    width: 60px; 
-  }
-  
-  .arrowblock {
-    width: 80px; 
-    border-top: 10px solid transparent; 
-  }
-  
-  .arrowright {
-    float: right;
-    border-top: 8px solid transparent; 
-    border-bottom: 8px solid transparent; 
-    border-left: 10px solid black; 
-  }
-  
-  .rect {
-    width: 70px; 
-    height: 3px; 
-    background-color: black;
-  } */
-/* 
-  .container {
-    display: flex;
-    width: 400px;
-  }
-  
-  .item {
-    flex-basis: 100px;
-    border: 1px solid black;
-  }
-  
-  .item1 {
-    flex-shrink: 2;
-  }
-   */
