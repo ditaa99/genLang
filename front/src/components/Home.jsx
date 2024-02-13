@@ -8,6 +8,7 @@ const Home = () => {
   const [nonterminalSymbols, setNonterminalSymbols] = useState("");
   const [startingSymbol, setStartingSymbol] = useState("");
   const [generatedLanguage, setGeneratedLanguage] = useState("");
+  const [rules, setRules] = useState([]);
 
   const handleGenerate = () => {
     // Prepare the data to be sent to the backend
@@ -25,15 +26,26 @@ const Home = () => {
     };
 
     // Send a POST request to the backend
-    axios
-      .post("/api/generate-languages", requestData)
-      .then((response) => {
-        console.log("Response from backend:", response.data);
+    axios.post("/api/generate-languages", requestData)
+      .then(response => {
+        // Handle the response from the backend
         setGeneratedLanguage(response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error generating language:", error);
       });
+  };
+
+  const addRule = () => {
+    setRules(prevRules => [...prevRules, rules.length + 1]);
+  };
+
+  const handleRuleChange = (index, value) => {
+    setRules(prevRules => {
+      const updatedRules = [...prevRules];
+      updatedRules[index] = value;
+      return updatedRules;
+    });
   };
 
   return (
@@ -77,20 +89,23 @@ const Home = () => {
         <div className="rules">
           <div className="rules-top">
             <p className="label">Rules:</p>
-            <button type="button" value="New" className="btn">
+            
+            <button type="button" value="New" className="btn" onClick={addRule}>
               New
             </button>
           </div>
-          <p>[backend will do the rest, inputting new sets of rules]</p>
+          <div>
+          <p>[ S &#x2192; aA]</p>
+          </div>
+          {rules.map((rule, index) => (
+            <div key={index} className="rule-row">
+              <p>{index + 1}. <input type="text" value={""} onChange={(e) => handleRuleChange(index, e.target.value)} /></p>
+            </div>
+          ))}
         </div>
       </div>
       <div className="solution">
-        <button
-          type="button"
-          value="Generate"
-          className="btn"
-          onClick={handleGenerate}
-        >
+        <button type="button" value="Generate" className="btn" onClick={handleGenerate}>
           Generate
         </button>
       </div>
