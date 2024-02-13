@@ -1,10 +1,9 @@
-.examples{
-    width: 98%;
-    font-family: 'Arial', sans-serif;
+.examples {
+  width: 98%;
+  font-family: "Arial", sans-serif;
 }
 
-  
-  /* .app-container {
+/* .app-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,56 +11,119 @@
     background-color: #f0f0f0;
   } */
 
-  
-  /* GrammarDisplay.css */
+/* GrammarDisplay.css */
 .example1 {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    color: #555;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #555;
+}
+
+h3 {
+  color: #333;
+}
+
+.tabbed {
+  margin-left: 45%;
+}
+.arrow {
+  display: inline-block;
+  position: relative;
+}
+
+.arrow::before {
+  content: "\2192"; /* Unicode for right arrow */
+  position: relative;
+}
+
+.arrow::after {
+  content: "#1";
+  font-size: smaller;
+  position: absolute;
+  top: -5px; /* Adjust as needed */
+  left: calc(50% - width / 2); /* Center the label */
+}
+
+p {
+  color: #555;
+  line-height: 1.5;
+}
+
+var.array {
+  font-style: normal;
+  font-size: x-large;
+}
+var.array span {
+  font-size: x-small;
+  margin-left: -2em; /* shift the arrow back over the letter */
+  vertical-align: 0.7em; /* tune the arrow vertical position */
+}
+
+/*   
+  .equation {
+    display: flex;
+    align-items: center;
+    text-align: center;
   }
   
-  h3 {
-    color: #333;
+  .equation-content {
+    display: flex;
+    align-items: center;
   }
-
-  .tabbed{
-    margin-left: 45%;
+  
+  .equation-part {
+    margin: 0 10px; 
   }
+  
   .arrow {
-    display: inline-block;
     position: relative;
   }
   
-  .arrow::before {
-    content: '\2192'; /* Unicode for right arrow */
-    position: relative;
-  }
-  
-  .arrow::after {
-    content: '#1';
-    font-size: smaller;
+  .rule-label {
     position: absolute;
-    top: -5px; /* Adjust as needed */
-    left: calc(50% - width /2); /* Center the label */
+    top: -0.1em; 
+    left: 50%;
+    transform: translateX(-50%);
   }
   
-  
-  p {
-    color: #555;
-    line-height: 1.5;
-  }
-
-  var.vector {
-    font-style : normal;
-    font-size:x-large;
-  }
-  var.vector span {
-    font-size:x-small;
-    margin-left: -1.6em;   /* shift the arrow back over the letter */
-    vertical-align : .7em; /* tune the arrow vertical position */
+  .rectcontainer {
+    margin-top: 3px;
+    height: 20px; 
+    width: 60px; 
   }
   
+  .arrowblock {
+    width: 80px; 
+    border-top: 10px solid transparent; 
+  }
+  
+  .arrowright {
+    float: right;
+    border-top: 8px solid transparent; 
+    border-bottom: 8px solid transparent; 
+    border-left: 10px solid black; 
+  }
+  
+  .rect {
+    width: 70px; 
+    height: 3px; 
+    background-color: black;
+  } */
+/* 
+  .container {
+    display: flex;
+    width: 400px;
+  }
+  
+  .item {
+    flex-basis: 100px;
+    border: 1px solid black;
+  }
+  
+  .item1 {
+    flex-shrink: 2;
+  }
+   */
