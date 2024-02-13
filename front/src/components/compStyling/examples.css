@@ -54,4 +54,14 @@
     color: #555;
     line-height: 1.5;
   }
+
+  var.vector {
+    font-style : normal;
+    font-size:x-large;
+  }
+  var.vector span {
+    font-size:x-small;
+    margin-left: -1.6em;   /* shift the arrow back over the letter */
+    vertical-align : .7em; /* tune the arrow vertical position */
+  }
   

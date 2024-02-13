@@ -10,8 +10,14 @@ const Examples = () => {
         <h3>Type 3: Regular Grammar</h3>
         <p>
           If given a grammar like this:
-          <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S, &#123;S-&gt;aS| aB, B-&gt;b | aS | bA, A-&gt;a&#125;〉
+          <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S, &#123;S&#x2192;aS| aB, B&#x2192;b | aS | bA, A&#x2192;a&#125;〉
         </p>
+        <div>
+          <p>
+          [ &#x2192; ]
+          </p>
+        <var className="vector">&#x2192;<span>a</span></var>
+        </div>
         <p>
           Let’s see what we get from these rules.
           Shortest word that we can generate is:
