@@ -43,21 +43,20 @@ const Examples = () => {
         <p>Other rules iterations give us these kinds of results:</p>
         <ul>
           <li>
-          S <CustomArrow overArr="#1" /> aSb{" "}
-        <span className="shrink">
-          <CustomArrow overArr="#1 n-times" />
-        </span>{" "}
-        a<sup>n</sup>Sb<sup>n</sup> &#x2192;
+            S <CustomArrow overArr="#1" /> aSb{" "}
+            <span className="shrink">
+              <CustomArrow overArr="#1 n-times" />
+            </span>{" "}
+            a<sup>n</sup>Sb<sup>n</sup> &#x2192;
           </li>
           <li className="tabbed">
             1. <CustomArrow overArr="#3" /> a<sup>n</sup> b<sup>n+1</sup>
           </li>
           <li className="tabbed">
-            2. <CustomArrow overArr="#2 k-times" /> a<sup>n</sup>Sb<sup>n+k</sup>{" "}
-        <CustomArrow overArr="#3" /> a<sup>n</sup>Sb<sup>n+k+1</sup>(this way we add
-            more b-s)
+            2. <CustomArrow overArr="#2 k-times" /> a<sup>n</sup>Sb
+            <sup>n+k</sup> <CustomArrow overArr="#3" /> a<sup>n</sup>Sb
+            <sup>n+k+1</sup>(this way we add more b-s)
           </li>
-
         </ul>
         <p>So we can generate these kinds of words:</p>
         <ul>
@@ -65,7 +64,7 @@ const Examples = () => {
             a<sup>n</sup> b<sup>n+1</sup>
           </li>
           <li>
-          a<sup>n</sup> b<sup>n+k+1</sup>
+            a<sup>n</sup> b<sup>n+k+1</sup>
           </li>
         </ul>
         <p>
@@ -149,25 +148,28 @@ const Examples = () => {
           </b>
         </p>
 
+        <br />
 
-        <br/>
-
-<p>TEST TEST</p>
+        <h3>Good to know:</h3>
+        <p>It`s also good to know that not every language can be generated</p>
+        <p>
+          For example: &#123;{" "}
+          <b>
+            1<sup>p</sup>
+          </b>
+          , where <b>p</b> is a prime number&#125; can not be generated
+        </p>
+        <p>TEST TEST</p>
         <ul>
           <li>
-          S <CustomArrow overArr="#1" /> aSb{" "}
-        <span className="shrink">
-          <CustomArrow overArr="#1 n-times" />
-        </span>{" "}
-        a<sup>n</sup>Sb<sup>n</sup> &#x2192;
+            S <CustomArrow overArr="#1" /> aSb{" "}
+            <span className="shrink">
+              <CustomArrow overArr="#1 n-times" />
+            </span>{" "}
+            a<sup>n</sup>Sb<sup>n</sup> &#x2192;
           </li>
-          <li className="tabbed">
-            1. rules
-            </li>
-          <li className="tabbed">
-            2. rules
-          </li>
-
+          <li className="tabbed">1. rules</li>
+          <li className="tabbed">2. rules</li>
         </ul>
         <p>TEST</p>
         <ul>
