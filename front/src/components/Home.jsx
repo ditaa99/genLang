@@ -10,34 +10,59 @@ const Home = () => {
   const [generatedLanguage, setGeneratedLanguage] = useState("");
   const [rules, setRules] = useState([]);
 
-  const handleGenerate = () => {
-    // Prepare the data to be sent to the backend
-    const requestData = {
-      grammar_rules: [
-        // You can construct grammar rules based on the user input
-        // For simplicity, let's assume the user only inputs terminal and nonterminal symbols
-        `${startingSymbol} -> ${terminalSymbols} ${nonterminalSymbols}`,
-      ],
-      symbols: {
-        terminal: terminalSymbols.split(" "),
-        nonterminal: nonterminalSymbols.split(" "),
-        starting: startingSymbol,
-      },
-    };
 
-    // Send a POST request to the backend
-    axios.post("/api/generate-languages", requestData)
-      .then(response => {
-        // Handle the response from the backend
-        setGeneratedLanguage(response.data);
-      })
-      .catch(error => {
-        console.error("Error generating language:", error);
-      });
+  const handleGenerate = async () => {
+    const requestData = {
+      // ... other data
+      terminal_symbols: terminalSymbols,
+    };
+    
+  
+    try {
+      const response = await axios.post("http://localhost:5000/newRule", requestData);
+      // Handle the response from the backend
+      setGeneratedLanguage(response.data);
+    } catch (error) {
+      console.error("Error generating language:", error);
+    }
   };
+  
+  // const handleGenerate = () => {
+  //   // Prepare the data to be sent to the backend
+  //   // const requestData = {
+  //   //   grammar_rules: [
+  //   //     // You can construct grammar rules based on the user input
+  //   //     // For simplicity, let's assume the user only inputs terminal and nonterminal symbols
+  //   //     `${startingSymbol} -> ${terminalSymbols} ${nonterminalSymbols}`,
+  //   //   ],
+  //   //   symbols: {
+  //   //     terminal: terminalSymbols.split(" "),
+  //   //     nonterminal: nonterminalSymbols.split(" "),
+  //   //     starting: startingSymbol,
+  //   //   },
+  //   // };
+  //   const requestData = {
+  //     // ... other data
+  //     terminal_symbols: terminalSymbols,
+  //   };
+  //   console.log(`Sending this data to the server:\n${requestData}`);
+
+  //   // Send the data to the backend
+
+  //   // Send a POST request to the backend
+  //   axios.post("/api/generate-languages", requestData)
+  //     .then(response => {
+  //       // Handle the response from the backend
+  //       setGeneratedLanguage(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.error("Error generating language:", error);
+  //     });
+  // };
 
   const addRule = () => {
     setRules(prevRules => [...prevRules, rules.length + 1]);
+    console.log('New button was clicked!')
   };
 
   const handleRuleChange = (index, value) => {
@@ -99,7 +124,7 @@ const Home = () => {
           </div>
           {rules.map((rule, index) => (
             <div key={index} className="rule-row">
-              <p>{index + 1}. <input type="text" value={""} onChange={(e) => handleRuleChange(index, e.target.value)} /></p>
+              <p>{index + 1}. <input type="text" value={rule || ""} onChange={(e) => handleRuleChange(index, e.target.value)} /></p>
             </div>
           ))}
         </div>

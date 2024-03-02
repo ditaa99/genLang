@@ -6,7 +6,6 @@ import Info from "./components/Info";
 const App = () => {
   return (
     <div className="App">
-      {/* Your existing code */}
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
