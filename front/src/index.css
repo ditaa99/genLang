@@ -88,11 +88,17 @@
   
 }
 
-.symbol-row {
+.input-wrapper {
   display: flex;
-  align-items: center; /* Vertically align the label and textarea */
-  margin-bottom: 10px; /* Add some space between rows */
+  align-items: center; 
+  /* margin-bottom: 10px;  */
 }
+/* .input-wrapper{
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
+  margin-bottom: 10px; 
+} */
 
 .label {
   min-width: 150px; /* Ensure a minimum width for the label */
@@ -104,6 +110,12 @@ textarea {
   flex: 1; /* Expand to fill remaining space */
   padding: 5px;
   border-color: #272f51;
+}
+
+.error-message{
+  color: red;
+  font-size: small;
+  /* margin-top: 2em; */
 }
 
 /* RULES */
@@ -131,3 +143,16 @@ textarea {
   justify-content: space-between;
   align-items: flex-start;
 }
+
+/* GPT */
+/* ... other styles */
+
+/* .input-wrapper {
+  position: relative; /* Allows positioning of error message 
+}*/
+
+/* .error-message {
+  color: red; 
+  font-size: 0.85em;
+  margin-top: 2em;
+}  */
