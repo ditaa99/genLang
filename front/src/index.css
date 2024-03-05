@@ -87,18 +87,13 @@
   flex-direction: column;
   
 }
-
+.symbol-row{
+  margin-bottom: 10px;
+}
 .input-wrapper {
   display: flex;
   align-items: center; 
-  /* margin-bottom: 10px;  */
 }
-/* .input-wrapper{
-  display: flex;
-  align-items: center; 
-  justify-content: space-between;
-  margin-bottom: 10px; 
-} */
 
 .label {
   min-width: 150px; /* Ensure a minimum width for the label */
@@ -115,7 +110,6 @@ textarea {
 .error-message{
   color: red;
   font-size: small;
-  /* margin-top: 2em; */
 }
 
 /* RULES */
@@ -144,15 +138,29 @@ textarea {
   align-items: flex-start;
 }
 
-/* GPT */
-/* ... other styles */
 
-/* .input-wrapper {
-  position: relative; /* Allows positioning of error message 
-}*/
 
-/* .error-message {
-  color: red; 
-  font-size: 0.85em;
-  margin-top: 2em;
-}  */
+/* RemoveButton */
+.rule-row {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.rule-text {
+  flex: 1; 
+}
+
+.remove-btn {
+  color: red;
+  background-color: rgb(235, 130, 130);
+  border: solid red 1px;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.remove-btn:hover {
+  box-shadow: 3px 3px 5px 1px rgba(252, 61, 61, 0.712);
+}

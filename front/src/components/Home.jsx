@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import "../index.css";
 import Menu from "./Menu";
+import Rule from "./Rule";
 
 const Home = () => {
   const [terminalSymbols, setTerminalSymbols] = useState("");
@@ -51,12 +52,43 @@ const Home = () => {
       hasError = true;
     }
 
+    // if (rules.length === 0) {
+    //   setRulesError("You must have at least a rule.");
+    //   hasError = true;
+    // } else {
+    //   setRulesError(null);
+    // }
     if (rules.length === 0) {
-      setRulesError("You have to have at least a rule.");
+      setRulesError("You must have at least a rule.");
       hasError = true;
     } else {
-      setRulesError(null);
+      // Check for empty rules
+      const hasEmptyRule = rules.some((rule) => rule === "");
+      if (hasEmptyRule) {
+        setRulesError("Rules cannot be empty");
+        hasError = true;
+      } else {
+        setRulesError(null);
+      }
     }
+
+    {
+      rules.map((rule, index) => (
+        <Rule
+          key={index}
+          index={index} // Pass the index
+          value={rule} // Pass the rule value
+          onRemove={(ruleIndex, updatedValue) => {
+            // Pass the onRemove function
+            const updatedRules = [...rules];
+            updatedRules.splice(ruleIndex, 1);
+            setRules(updatedRules);
+            handleRuleChange(index, updatedValue);
+          }}
+        />
+      ));
+    }
+
 
     if (hasError) {
       return;
@@ -82,7 +114,7 @@ const Home = () => {
   };
 
   const addRule = () => {
-    setRules((prevRules) => [...prevRules, rules.length + 1]);
+    setRules((prevRules) => [...prevRules, ""]);
   };
 
   const handleRuleChange = (index, value) => {
@@ -92,6 +124,28 @@ const Home = () => {
       return updatedRules;
     });
   };
+
+  const onRemove = (ruleIndex) => {
+    setRules(prevRules => prevRules.filter((_, index) => index !== ruleIndex));
+  };
+  // const addRule = () => {
+  //   setRules((prevRules) => [...prevRules, ""]);
+  // };
+
+  // // const handleRuleChange = (index, value) => {
+  // //   setRules((prevRules) => {
+  // //     const updatedRules = [...prevRules];
+  // //     updatedRules[index] = value;
+  // //     return updatedRules;
+  // //   });
+  // // };
+  // const handleRuleChange = (index, value) => {
+  //   setRules((prevRules) => {
+  //     const updatedRules = [...prevRules];
+  //     updatedRules[index] = value.trim(); // Trim for more reliable validation
+  //     return updatedRules;
+  //   });
+  // };
 
   // Validation functions
   const validateTerminalSymbols = (symbols) => {
@@ -127,7 +181,6 @@ const Home = () => {
               ></textarea>
             </div>
             <div className="error-message">{terminalSymbolsError}</div>
-          <br/>
           </div>
           <div className="symbol-row">
             <div className="input-wrapper">
@@ -141,7 +194,6 @@ const Home = () => {
               ></textarea>
             </div>{" "}
             <div className="error-message">{nonterminalSymbolsError}</div>
-            <br/>
           </div>
           <div className="symbol-row">
             <div className="input-wrapper">
@@ -166,16 +218,12 @@ const Home = () => {
             </button>
           </div>
           {rules.map((rule, index) => (
-            <div key={index} className="rule-row">
-              <p>
-                {index + 1}.{" "}
-                <input
-                  type="text"
-                  value={rule || ""}
-                  onChange={(e) => handleRuleChange(index, e.target.value)}
-                />
-              </p>
-            </div>
+            <Rule
+            key={index}
+            index={index}
+            value={rule}
+            onRemove={onRemove} // Pass the onRemove function 
+        />
           ))}
           <div className="error-message">{rulesError}</div>
         </div>
