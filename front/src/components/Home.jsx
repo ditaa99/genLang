@@ -7,26 +7,44 @@ const Home = () => {
   const [terminalSymbols, setTerminalSymbols] = useState("");
   const [nonterminalSymbols, setNonterminalSymbols] = useState("");
   const [startingSymbol, setStartingSymbol] = useState("");
-  const [generatedLanguage, setGeneratedLanguage] = useState("");
+  // const [generatedLanguage, setGeneratedLanguage] = useState("");
   const [rules, setRules] = useState([]);
 
 
+
+  // const handleGenerate = async () => {
+  //   const requestData = {
+  //     terminal_symbols: terminalSymbols,
+  //   };
+  
+  //   try {
+  //     const response = await axios.post("http://localhost:5000/newRule", requestData);
+  //     // Handle the response from the backend
+  //     // setGeneratedLanguage(response.data);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error("Error generating language:", error);
+  //   }
+  // };
+  
   const handleGenerate = async () => {
     const requestData = {
-      // ... other data
-      terminal_symbols: terminalSymbols,
+      terminalSymbols: terminalSymbols,
+      nonterminalSymbols: nonterminalSymbols,
+      startingSymbol: startingSymbol,
+      rules: rules,
     };
     
   
     try {
       const response = await axios.post("http://localhost:5000/newRule", requestData);
-      // Handle the response from the backend
-      setGeneratedLanguage(response.data);
+      console.log(response.data); // This will show the response on your frontend console.
     } catch (error) {
       console.error("Error generating language:", error);
     }
   };
   
+
   // const handleGenerate = () => {
   //   // Prepare the data to be sent to the backend
   //   // const requestData = {
@@ -136,7 +154,7 @@ const Home = () => {
       </div>
       <div className="lang">
         <p className="label">Language:</p>
-        <div>{generatedLanguage}</div>
+        {/* <div>{generatedLanguage}</div> */}
       </div>
       <div style={{ display: "none" }}>
         {/* This section is hidden, but you can uncomment it if needed */}

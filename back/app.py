@@ -3,6 +3,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+# CORS(app, origins=['http://localhost:5173'], methods=["POST"]) # Restrict origin and method
+
 
 
 # Example function to generate a formal language from grammar rules and symbols
@@ -29,24 +31,39 @@ def generate_languages():
   # ... rest of your logic using terminal_symbols
 
 
+@app.route('/newRule', methods=['POST'])
+def process_text():
+  data = request.get_json()
+  terminal_symbols = data.get('terminalSymbols')
+  nonterminal_symbols = data.get('nonterminalSymbols')
+  starting_symbol = data.get('startingSymbol')
+  rules = data.get('rules')
+
+  # Print received data to the console
+  print(f"Received data: \nterminal_symbols: {terminal_symbols}\nnonterminal_symbols: {nonterminal_symbols}\nstarting_symbol: {starting_symbol}\nrules: {rules}")
+
+  return jsonify({'message': 'Data received successfully!'})
+
+
+
 @app.route("/")
 def home():
     return "Hello :)"
 
-# if __name__ == "__main__":  
-#     app.run(debug=True)
-if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+if __name__ == "__main__":  
+    app.run(debug=True)
+# if __name__ == "__main__":
+#     app.run(host='0.0.0.0', debug=True)
 
 
-@app.route('/newRule', methods=['POST'])
-def process_text():
-    text = request.json.get('text')  # Retrieve text data from request body
-    print('Adding Rule:', text)  # Print text data on the backend console
+# @app.route('/newRule', methods=['POST'])
+# def process_text():
+#     text = request.json.get('text')  # Retrieve text data from request body
+#     print('Adding Rule:', text)  # Print text data on the backend console
 
-    # You can perform additional processing or return a response if needed
-    processed_text = text.upper()  # Example processing: converting text to uppercase
-    return jsonify({'Adding Rule:': processed_text})
+#     # You can perform additional processing or return a response if needed
+#     # processed_text = text.upper()  # Example processing: converting text to uppercase
+#     return jsonify({'Adding Rule:': text})
 
 
 
