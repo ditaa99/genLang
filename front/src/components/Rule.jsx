@@ -1,20 +1,29 @@
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import PropTypes from "prop-types";
 
-const Rule = ({ index, value, onRemove }) => {
+const Rule = ({ index, value, onRemove, onInputChange }) => {
+  const [ruleValue, setRuleValue] = useState(value); // State to hold the rule value
+
+  const handleInputChange = (e) => {
+    const newValue = e.target.value;
+    setRuleValue(newValue); // Update the ruleValue state
+    onInputChange(index, newValue); // Call the onInputChange function from props
+  };
+
   return (
     <div key={index} className="rule-row">
       <p>
-         {index + 1}.{" "}
+        {index + 1}.{" "}
         <input
           type="text"
-          value={value}
-          onChange={(e) => onRemove(index, e.target.value)}
+          value={ruleValue}
+          onChange={handleInputChange} // Call handleInputChange when input changes
         />
       </p>
       <button
         type="button"
         className="remove-btn"
-        onClick={() => onRemove(index)}
+        onClick={() => onRemove(index)} // Call onRemove with only the index
       >
         Remove
       </button>
@@ -25,7 +34,8 @@ const Rule = ({ index, value, onRemove }) => {
 Rule.propTypes = {
   index: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
-  onRemove: PropTypes.func.isRequired
+  onRemove: PropTypes.func.isRequired,
+  onInputChange: PropTypes.func.isRequired,
 };
 
 export default Rule;

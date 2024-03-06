@@ -13,6 +13,10 @@ const Home = () => {
   const [nonterminalSymbolsError, setNonterminalSymbolsError] = useState(null);
   const [startingSymbolError, setStartingSymbolError] = useState(null);
   const [rulesError, setRulesError] = useState(null);
+  const [terminalDuplicateWarning, setTerminalDuplicateWarning] =
+    useState(null);
+  const [nonTerminalDuplicateWarning, setNonTerminalDuplicateWarning] =
+    useState(null);
 
   const handleGenerate = async () => {
     // Validation
@@ -52,12 +56,32 @@ const Home = () => {
       hasError = true;
     }
 
-    // if (rules.length === 0) {
-    //   setRulesError("You must have at least a rule.");
-    //   hasError = true;
-    // } else {
-    //   setRulesError(null);
-    // }
+    // Check for duplicates in Terminal Symbols
+    const terminalSymbolsArray = terminalSymbols.split(",");
+    const hasTerminalDuplicates =
+      new Set(terminalSymbolsArray).size !== terminalSymbolsArray.length;
+
+    if (hasTerminalDuplicates) {
+      setTerminalDuplicateWarning(
+        "Warning: You have entered duplicate symbols in Terminal symbols."
+      );
+    } else {
+      setTerminalDuplicateWarning(null);
+    }
+
+    // Check for duplicates in Nonterminal Symbols
+    const nonTerminalSymbolsArray = nonterminalSymbols.split(",");
+    const hasNonTerminalDuplicates =
+      new Set(nonTerminalSymbolsArray).size !== nonTerminalSymbolsArray.length;
+
+    if (hasNonTerminalDuplicates) {
+      setNonTerminalDuplicateWarning(
+        "Warning: You have entered duplicate symbols in Nonterminal symbols."
+      );
+    } else {
+      setNonTerminalDuplicateWarning(null);
+    }
+
     if (rules.length === 0) {
       setRulesError("You must have at least a rule.");
       hasError = true;
@@ -83,12 +107,11 @@ const Home = () => {
             const updatedRules = [...rules];
             updatedRules.splice(ruleIndex, 1);
             setRules(updatedRules);
-            handleRuleChange(index, updatedValue);
+            onInputChange(index, updatedValue);
           }}
         />
       ));
     }
-
 
     if (hasError) {
       return;
@@ -117,17 +140,39 @@ const Home = () => {
     setRules((prevRules) => [...prevRules, ""]);
   };
 
-  const handleRuleChange = (index, value) => {
+  const handleRuleChange = (index, updatedValue) => {
     setRules((prevRules) => {
       const updatedRules = [...prevRules];
-      updatedRules[index] = value;
+      updatedRules[index] = updatedValue.trim(); // Trim for more reliable validation
       return updatedRules;
     });
   };
 
-  const onRemove = (ruleIndex) => {
-    setRules(prevRules => prevRules.filter((_, index) => index !== ruleIndex));
+  // const onRemove = (ruleIndex) => {
+  //   setRules((prevRules) =>
+  //     prevRules.filter((_, index) => index !== ruleIndex)
+  //   );
+  // };
+  // const onRemove = (ruleIndex) => {
+  //   console.log("Rule index to remove:", ruleIndex);
+
+  //   const updatedRules = [...rules];
+  //   updatedRules.splice(ruleIndex, 1);
+  //   setRules(updatedRules);
+  // };
+
+  const onInputChange = (index, updatedValue) => {
+    handleRuleChange(index, updatedValue);
   };
+
+  const onRemove = (ruleIndex) => {
+    console.log("Rule index to remove:", ruleIndex);
+
+    const updatedRules = [...rules];
+    updatedRules.splice(ruleIndex, 1);
+    setRules(updatedRules);
+  };
+
   // const addRule = () => {
   //   setRules((prevRules) => [...prevRules, ""]);
   // };
@@ -181,6 +226,9 @@ const Home = () => {
               ></textarea>
             </div>
             <div className="error-message">{terminalSymbolsError}</div>
+            {terminalDuplicateWarning && (
+              <div className="warning-message">{terminalDuplicateWarning}</div>
+            )}
           </div>
           <div className="symbol-row">
             <div className="input-wrapper">
@@ -194,6 +242,11 @@ const Home = () => {
               ></textarea>
             </div>{" "}
             <div className="error-message">{nonterminalSymbolsError}</div>
+            {nonTerminalDuplicateWarning && (
+              <div className="warning-message">
+                {nonTerminalDuplicateWarning}
+              </div>
+            )}
           </div>
           <div className="symbol-row">
             <div className="input-wrapper">
@@ -219,11 +272,12 @@ const Home = () => {
           </div>
           {rules.map((rule, index) => (
             <Rule
-            key={index}
-            index={index}
-            value={rule}
-            onRemove={onRemove} // Pass the onRemove function 
-        />
+              key={index}
+              index={index}
+              value={rule}
+              onRemove={(index) => onRemove(index)}
+              onInputChange={handleRuleChange} // Pass handleRuleChange to Rule component
+            />
           ))}
           <div className="error-message">{rulesError}</div>
         </div>
