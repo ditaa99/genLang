@@ -45,15 +45,16 @@ const Info = () => {
           <li>Nonterminal symbol(s)</li>
           <li>Starting symbol</li>
         </ul>
-
+        <p>
+        • When inputting multiple symbols separate them with commas and no
+          space.
+        </p>
         <p>On your right hand side input your set of rules.</p>
-
+        <p>• [Instructions on how to input the rules will be here]</p>
         <p>
           Click on the <i>Generate</i> button and wait for the magic to happen
           😊
         </p>
-
-        <p>[more about the syntax comes later]</p>
 
         <div className="imgContainer">
           <img src={icon} alt="Icon" className="icon" />
