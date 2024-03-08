@@ -1,8 +1,5 @@
-// import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import icon from "../assets/icon.png";
-// import App from '../App';
-// import Info from "./Info";
 
 const Menu = () => {
   const navigate = useNavigate();
@@ -19,7 +16,7 @@ const Menu = () => {
 
   return (
     <div className="menu">
-      <img src={icon} alt="Icon" height="45" onClick={iconClick}/> {/*  */}
+      <img src={icon} className="menu-img" alt="Icon" height="45" onClick={iconClick}/>
       <button type="button" value="Save" className="menu-item">
         Save
       </button>

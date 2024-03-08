@@ -148,19 +148,6 @@ const Home = () => {
     });
   };
 
-  // const onRemove = (ruleIndex) => {
-  //   setRules((prevRules) =>
-  //     prevRules.filter((_, index) => index !== ruleIndex)
-  //   );
-  // };
-  // const onRemove = (ruleIndex) => {
-  //   console.log("Rule index to remove:", ruleIndex);
-
-  //   const updatedRules = [...rules];
-  //   updatedRules.splice(ruleIndex, 1);
-  //   setRules(updatedRules);
-  // };
-
   const onInputChange = (index, updatedValue) => {
     handleRuleChange(index, updatedValue);
   };
@@ -172,25 +159,6 @@ const Home = () => {
     updatedRules.splice(ruleIndex, 1);
     setRules(updatedRules);
   };
-
-  // const addRule = () => {
-  //   setRules((prevRules) => [...prevRules, ""]);
-  // };
-
-  // // const handleRuleChange = (index, value) => {
-  // //   setRules((prevRules) => {
-  // //     const updatedRules = [...prevRules];
-  // //     updatedRules[index] = value;
-  // //     return updatedRules;
-  // //   });
-  // // };
-  // const handleRuleChange = (index, value) => {
-  //   setRules((prevRules) => {
-  //     const updatedRules = [...prevRules];
-  //     updatedRules[index] = value.trim(); // Trim for more reliable validation
-  //     return updatedRules;
-  //   });
-  // };
 
   // Validation functions
   const validateTerminalSymbols = (symbols) => {
