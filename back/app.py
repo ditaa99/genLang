@@ -4,8 +4,6 @@ W - set of non-terminal symbols
 S - starting symbol
 P - set of rules (rules for generating sentences)
 '''
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 '''
 GET
 POST
@@ -14,30 +12,11 @@ DELETE
 
 a few more methods, but these are the most used ones'''
 
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-# CORS(app, origins=['http://localhost:5173'], methods=["POST"]) # Restrict origin and method
-
-# Example function to generate a formal language from grammar rules and symbols
-@app.route("/api/generate-languages", methods=["POST"])
-def generate_languages(grammar_rules, symbols):
-  data = request.get_json()
-  terminal_symbols = data["terminal_symbols"]
-  # This is just a placeholder function; replace it with your actual implementation
-  return "Example formal language generated"
-
-
-# @app.route('/fetchData', methods=['POST'])
-# def process_text():
-#   data = request.get_json()
-#   terminal_symbols = data.get('terminalSymbols')
-#   nonterminal_symbols = data.get('nonterminalSymbols')
-#   starting_symbol = data.get('startingSymbol')
-#   rules = data.get('rules')
-#   # Print received data to the console
-#   print(f"Received data: \nterminal_symbols: {terminal_symbols}\nnonterminal_symbols: {nonterminal_symbols}\nstarting_symbol: {starting_symbol}\nrules: {rules}")
-#   return jsonify({'message': 'Data received successfully!'})
 
 @app.route('/fetchData', methods=['POST'])
 def process_text():
@@ -51,18 +30,17 @@ def process_text():
     
     # Constructing the dictionary
     grammar_dict = {
-        'V': terminal_symbols,
-        'W': nonterminal_symbols,
-        'S': starting_symbol,
-        'P': rules
+        'terminal_symbols': terminal_symbols,
+        'nonterminal_symbols': nonterminal_symbols,
+        'starting_symbol': starting_symbol,
+        'rules': rules
     }
 
     # Print received data and constructed dictionary to the console
-    print(f"Received data: \nterminal_symbols: {terminal_symbols}\nnonterminal_symbols: {nonterminal_symbols}\nstarting_symbol: {starting_symbol}\nrules: {rules}")
-    print("Constructed dictionary:", grammar_dict)
+    print("Received data:", grammar_dict)
     
-    return jsonify({'message': 'Data received successfully!'})
-
+    # Return the constructed dictionary in the response
+    return jsonify(grammar_dict)
 
 
 @app.route("/")
@@ -71,9 +49,3 @@ def home():
 
 if __name__ == "__main__":  
     app.run(debug=True)
-  # app.run(host='0.0.0.0', debug=True)
-
-
-
-
-    

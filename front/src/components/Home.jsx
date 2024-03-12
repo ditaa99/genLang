@@ -17,6 +17,7 @@ const Home = () => {
     useState(null);
   const [nonTerminalDuplicateWarning, setNonTerminalDuplicateWarning] =
     useState(null);
+  const [generatedData, setGeneratedData] = useState(null);
 
   const handleGenerate = async () => {
     // Validation
@@ -133,12 +134,22 @@ const Home = () => {
       rules: rules,
     };
 
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:5000/fetchData",
+    //     requestData
+    //   );
+    //   console.log(response.data); // This will show the response on your frontend console.
+    // } catch (error) {
+    //   console.error("Error generating language:", error);
+    // }
+
     try {
       const response = await axios.post(
         "http://localhost:5000/fetchData",
         requestData
       );
-      console.log(response.data); // This will show the response on your frontend console.
+      setGeneratedData(response.data); // Store received data
     } catch (error) {
       console.error("Error generating language:", error);
     }
@@ -268,6 +279,16 @@ const Home = () => {
         >
           Generate
         </button>
+
+        {generatedData && (
+          <div>
+            <h2>Received data:</h2>
+            <p>Terminal Symbols: {generatedData.terminal_symbols}</p>
+            <p>Nonterminal Symbols: {generatedData.nonterminal_symbols}</p>
+            <p>Starting Symbol: {generatedData.starting_symbol}</p>
+            <p>Rules: {JSON.stringify(generatedData.rules)}</p>
+          </div>
+        )}
       </div>
     </div>
   );
