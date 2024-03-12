@@ -117,10 +117,18 @@ const Home = () => {
       return;
     }
 
-    // Data to send
+    // Prepare data without duplicates
+    const uniqueTerminalSymbols = Array.from(
+      new Set(terminalSymbols.split(","))
+    );
+    const uniqueNonterminalSymbols = Array.from(
+      new Set(nonterminalSymbols.split(","))
+    );
+
+    // Data to send (using processed unique symbol sets)
     const requestData = {
-      terminalSymbols: terminalSymbols,
-      nonterminalSymbols: nonterminalSymbols,
+      terminalSymbols: uniqueTerminalSymbols.join(","), // Join back into comma-separated strings
+      nonterminalSymbols: uniqueNonterminalSymbols.join(","),
       startingSymbol: startingSymbol,
       rules: rules,
     };
