@@ -19,6 +19,7 @@ const Home = () => {
     useState(null);
   const [generatedData, setGeneratedData] = useState(null);
 
+  
   const handleGenerate = async () => {
     // Validation
     let hasError = false;
@@ -126,6 +127,51 @@ const Home = () => {
       new Set(nonterminalSymbols.split(","))
     );
 
+    // Check for validity of nonterminal and terminal symbols in rules
+  const nonterminalSet = new Set(nonterminalSymbols.split(","));
+  const terminalSet = new Set(terminalSymbols.split(","));
+
+  const validRuleSymbols = rules.every(rule => {
+    const [leftSide, rightSide] = rule.trim().split("-");
+    const nonterminal = leftSide.trim();
+    const symbols = rightSide.trim().split(/\s+/);
+
+    // Check if the nonterminal symbol is in the set of nonterminal symbols
+    if (!nonterminalSet.has(nonterminal)) {
+      setRulesError(`Rule "${rule}" contains an invalid nonterminal symbol.`);
+      return false;
+    }
+
+    // Check if all symbols on the right side are either in the terminal or nonterminal sets
+    for (const symbol of symbols) {
+      if (!nonterminalSet.has(symbol) && !terminalSet.has(symbol)) {
+        setRulesError(`Rule "${rule}" contains an invalid symbol: ${symbol}`);
+        return false;
+      }
+    }
+
+    // Check if the rule is of the form "nonterminal - terminal" or "nonterminal - terminal nonterminal"
+    if (symbols.length === 1 && !terminalSet.has(symbols[0])) {
+      setRulesError(`Rule "${rule}" must be of the form "NonterminalSymbol - TerminalSymbol".`);
+      return false;
+    } else if (symbols.length > 1 && !nonterminalSet.has(symbols[symbols.length - 1])) {
+      setRulesError(`Rule "${rule}" must end with a valid nonterminal symbol.`);
+      return false;
+    } else if (
+      symbols.length > 2 || // Rule contains more than two symbols
+      (symbols.length === 2 && terminalSet.has(symbols[1])) // Rule has two symbols, but the second one is terminal
+    ) {
+      setRulesError(`Rule "${rule}" must be of the form "NonterminalSymbol - TerminalSymbol NonterminalSymbol".`);
+      return false;
+    }
+
+    return true;
+  });
+
+  if (!validRuleSymbols) {
+    hasError = true;
+  }
+
     // Data to send (using processed unique symbol sets)
     const requestData = {
       terminalSymbols: uniqueTerminalSymbols.join(","), // Join back into comma-separated strings
@@ -153,7 +199,7 @@ const Home = () => {
     } catch (error) {
       console.error("Error generating language:", error);
     }
-  };
+  }; //handleGenerate ends
 
   const addRule = () => {
     setRules((prevRules) => [...prevRules, ""]);
