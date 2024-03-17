@@ -36,21 +36,30 @@ const Info = () => {
           This software is supposed to help you (users) understand how to find
           the language that your given grammar generates.
         </p>
+        <p>The software handles only <b>Regular Grammars</b> so far.</p>
 
         <h3>How to use:</h3>
 
         <p>On your left hand side input your:</p>
         <ul>
-          <li>Terminal symbol(s)</li>
-          <li>Nonterminal symbol(s)</li>
-          <li>Starting symbol</li>
+          <li><b>Terminal symbol(s)</b> - denoted by lowercase letters.</li>
+          <li><b>Nonterminal symbol(s)</b> - denoted by uppercase letters.</li>
+          <li><b>Starting symbol</b> is one of the nonterminal symbols</li>
         </ul>
         <p>
         • When inputting multiple symbols separate them with commas and no
           space.
         </p>
         <p>On your right hand side input your set of rules.</p>
-        <p>• [Instructions on how to input the rules will be here]</p>
+        <p>
+        • Rules consist of a <b>nonterminal</b> symbol followed by a dash (-) and then a <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
+        </p>
+        <p>The accepted forms of the rules are:</p>
+        <p>• nontermial - terminal</p>
+        <p>• nontermial - terminal nontermial</p>
+        <p>The non-accepted forms of the rules are:</p>
+        <p>• nontermial - nontermial</p>
+        <p>• nontermial - nontermial terminal</p>
         <p>
           Click on the <i>Generate</i> button and wait for the magic to happen
           😊
