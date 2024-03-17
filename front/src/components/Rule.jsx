@@ -23,7 +23,8 @@ const Rule = ({ index, value, onRemove, onInputChange }) => {
       <button
         type="button"
         className="remove-btn"
-        onClick={() => onRemove(index)} // Call onRemove with only the index
+        value="Remove"
+        onClick={onRemove}
       >
         Remove
       </button>

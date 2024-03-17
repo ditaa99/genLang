@@ -19,7 +19,6 @@ const Home = () => {
   const [nonTerminalDuplicateWarning, setNonTerminalDuplicateWarning] =
     useState(null);
   const [generatedData, setGeneratedData] = useState(null);
-  
 
   const addRule = () => {
     setRules((prevRules) => [...prevRules, ""]);
@@ -33,11 +32,18 @@ const Home = () => {
     });
   };
 
+  // const onRemove = (ruleIndex) => {
+  //   const updatedRules = [...rules];
+  //   updatedRules.splice(ruleIndex, 1);
+  //   setRules(updatedRules);
+  // };
   const onRemove = (ruleIndex) => {
-    const updatedRules = [...rules];
+    const updatedRules = [...rules]; 
     updatedRules.splice(ruleIndex, 1);
     setRules(updatedRules);
-  };
+   };
+  
+  
 
   // const onInputChange = (index, updatedValue) => {
   //   handleRuleChange(index, updatedValue);
@@ -76,7 +82,9 @@ const Home = () => {
                 onChange={(e) => setTerminalSymbols(e.target.value)}
               ></textarea>
             </div>
-            {terminalSymbolsError && <div className="error-message">{terminalSymbolsError}</div>}
+            {terminalSymbolsError && (
+              <div className="error-message">{terminalSymbolsError}</div>
+            )}
 
             {terminalDuplicateWarning && (
               <div className="warning-message">{terminalDuplicateWarning}</div>
@@ -123,13 +131,21 @@ const Home = () => {
             </button>
           </div>
           {rules.map((rule, index) => (
-            <Rule
-              key={index}
-              index={index}
-              value={rule}
-              onRemove={(index) => onRemove(index)}
-              onInputChange={handleRuleChange} // Pass handleRuleChange to Rule component
-            />
+           <Rule
+           key={index}
+           index={index}
+           value={rule}
+           onRemove={onRemove} // Pass the onRemove function directly
+           onInputChange={handleRuleChange} 
+         />
+          
+            // <Rule
+            //   key={index}
+            //   index={index}
+            //   value={rule}
+            //   onRemove={(index) => onRemove(index)}
+            //   onInputChange={handleRuleChange} // Pass handleRuleChange to Rule component
+            // />
           ))}
           <div className="error-message">{rulesError}</div>
         </div>
