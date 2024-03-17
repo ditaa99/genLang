@@ -42,7 +42,7 @@ const Info = () => {
 
         <p>On your left hand side input your:</p>
         <ul>
-          <li><b>Terminal symbol(s)</b> - denoted by lowercase letters.</li>
+          <li><b>Terminal symbol(s)</b> - denoted by lowercase letters or numbers.</li>
           <li><b>Nonterminal symbol(s)</b> - denoted by uppercase letters.</li>
           <li><b>Starting symbol</b> is one of the nonterminal symbols</li>
         </ul>
@@ -52,8 +52,9 @@ const Info = () => {
         </p>
         <p>On your right hand side input your set of rules. <br/> Rules consist of a <b>nonterminal</b> symbol followed by a dash (-) and then a <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
        </p>
+       {/* <p>left handside (left from the dash) one capital (nonterminal symbol only) and the right handside one or two elements (either one terminal only or nonterminal terminal)</p> */}
         <p>
-        • inputting rules - space inbetween all symbols </p>
+        • When inputting the rules, make sure to have space in between terminal and nonterminal symbols </p>
         <p>The accepted forms of the rules are: <br/>
         • nontermial - terminal<br/>
         • nontermial - terminal nontermial
