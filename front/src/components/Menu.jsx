@@ -17,12 +17,15 @@ const Menu = () => {
   return (
     <div className="menu">
       <img src={icon} className="menu-img" alt="Icon" height="45" onClick={iconClick}/>
+      <button type="button" value="Home" className="menu-item"onClick={iconClick}>
+        Home
+      </button>
       <button type="button" value="Save" className="menu-item">
         Save
       </button>
-      <button type="button" value="Import" className="menu-item">
+      {/* <button type="button" value="Import" className="menu-item">
         Import
-      </button>
+      </button> */}
       <button type="button" value="Examples" className="menu-item"onClick={examplesClick}>
         Examples
       </button>

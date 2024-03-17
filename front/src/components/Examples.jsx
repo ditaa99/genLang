@@ -1,4 +1,3 @@
-// import React from 'react';
 import Menu from "./Menu";
 import "./compStyling/examples.css";
 import PropTypes from "prop-types";
@@ -80,30 +79,7 @@ const Examples = () => {
           <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S,
           &#123;S&#x2192;aS| aB, B&#x2192;b | aS | bA, A&#x2192;a&#125;〉
         </p>
-        {/* <div>
-          <p>[ &#x2192; ]</p>
-          <var className="array">
-            &#x2192;<span>a</span>
-          </var>
-        </div>
-        <CustomArrow overArr="a" /> */}
-        {/* <div className="equation">
-          <div className="equation-content">
-            <span className="equation-part">A</span>
-            <div className="arrow">
-              <span className="rule-label">#</span>
-              <div className="arrowblock">
-                <div className="arrowright"></div>
-                <div className="rectcontainer">
-                  <div className="rect"></div>
-                  <div className="rect"></div>
-                  <div className="rect"></div>
-                </div>
-              </div>
-            </div>
-            <span className="equation-part">B</span>
-          </div>
-        </div> */}
+        
         <p>
           Let’s see what we get from these rules. Shortest word that we can
           generate is: S <CustomArrow overArr="#2" /> aB{" "}
@@ -159,7 +135,7 @@ const Examples = () => {
           </b>
           , where <b>p</b> is a prime number&#125; can not be generated
         </p>
-        <p>TEST TEST</p>
+        {/* <p>TEST TEST</p>
         <ul>
           <li>
             S <CustomArrow overArr="#1" /> aSb{" "}
@@ -179,7 +155,7 @@ const Examples = () => {
           <li>
             a<sup>n</sup> ba
           </li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );

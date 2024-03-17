@@ -50,16 +50,19 @@ const Info = () => {
         • When inputting multiple symbols separate them with commas and no
           space.
         </p>
-        <p>On your right hand side input your set of rules.</p>
+        <p>On your right hand side input your set of rules. <br/> Rules consist of a <b>nonterminal</b> symbol followed by a dash (-) and then a <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
+       </p>
         <p>
-        • Rules consist of a <b>nonterminal</b> symbol followed by a dash (-) and then a <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
+        • inputting rules - space inbetween all symbols </p>
+        <p>The accepted forms of the rules are: <br/>
+        • nontermial - terminal<br/>
+        • nontermial - terminal nontermial
         </p>
-        <p>The accepted forms of the rules are:</p>
-        <p>• nontermial - terminal</p>
-        <p>• nontermial - terminal nontermial</p>
-        <p>The non-accepted forms of the rules are:</p>
-        <p>• nontermial - nontermial</p>
-        <p>• nontermial - nontermial terminal</p>
+        <p>The non-accepted forms of the rules are: <br/>
+        • nontermial - nontermial <br/>
+        • nontermial - nontermial terminal <br/>
+        • terminal - (anything) <br/>
+        </p>
         <p>
           Click on the <i>Generate</i> button and wait for the magic to happen
           😊
