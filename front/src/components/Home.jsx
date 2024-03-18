@@ -21,33 +21,22 @@ const Home = () => {
   const [generatedData, setGeneratedData] = useState(null);
 
   const addRule = () => {
-    setRules((prevRules) => [...prevRules, ""]);
+    setRules((prevRules) => [...prevRules, { id: Date.now(), value: "" }]);
   };
 
-  const handleRuleChange = (index, updatedValue) => {
+  const handleRuleChange = (ruleId, updatedValue) => {
     setRules((prevRules) => {
-      const updatedRules = [...prevRules];
-      updatedRules[index] = updatedValue.trim(); // Trim for more reliable validation
-      return updatedRules;
+      return prevRules.map((rule) =>
+        rule.id === ruleId ? { ...rule, value: updatedValue.trim() } : rule
+      );
     });
   };
 
-  // const onRemove = (ruleIndex) => {
-  //   const updatedRules = [...rules];
-  //   updatedRules.splice(ruleIndex, 1);
-  //   setRules(updatedRules);
-  // };
-  const onRemove = (ruleIndex) => {
-    const updatedRules = [...rules]; 
-    updatedRules.splice(ruleIndex, 1);
-    setRules(updatedRules);
-   };
-  
-  
-
-  // const onInputChange = (index, updatedValue) => {
-  //   handleRuleChange(index, updatedValue);
-  // };
+  const onRemove = (ruleId) => {
+    setRules((currentRules) =>
+      currentRules.filter((rule) => rule.id !== ruleId)
+    );
+  };
 
   const handleGenerateClick = () => {
     handleGenerate(
@@ -131,21 +120,14 @@ const Home = () => {
             </button>
           </div>
           {rules.map((rule, index) => (
-           <Rule
-           key={index}
-           index={index}
-           value={rule}
-           onRemove={onRemove} // Pass the onRemove function directly
-           onInputChange={handleRuleChange} 
-         />
-          
-            // <Rule
-            //   key={index}
-            //   index={index}
-            //   value={rule}
-            //   onRemove={(index) => onRemove(index)}
-            //   onInputChange={handleRuleChange} // Pass handleRuleChange to Rule component
-            // />
+            <Rule
+              key={rule.id}
+              id={rule.id}
+              index={index}
+              value={rule.value}
+              onRemove={onRemove}
+              onInputChange={handleRuleChange}
+            />
           ))}
           <div className="error-message">{rulesError}</div>
         </div>
