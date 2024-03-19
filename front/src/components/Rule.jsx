@@ -1,26 +1,34 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Rule = ({ id, index, value, onRemove, onInputChange }) => {
+const Rule = ({ id, index, value, onInputChange, onRemove }) => {
   const [ruleValue, setRuleValue] = useState(value);
 
   const handleInputChange = (e) => {
     const newValue = e.target.value;
     setRuleValue(newValue);
-    onInputChange(id, newValue); // Pass the id instead of index
+    onInputChange(id, newValue);
   };
 
-  const handleRemoveClick = () => {
-    onRemove(id); // Use a closure to tie the remove button to this rule's id
+  const handleRemove = () => {
+    onRemove(id);
   };
 
   return (
     <div className="rule-row">
       <p>
-        {index + 1}.{" "}
-        <input type="text" value={ruleValue} onChange={handleInputChange} />
+      {index + 1}: &nbsp; 
+        <input
+          type="text"
+          value={ruleValue}
+          onChange={handleInputChange}
+        />
       </p>
-      <button type="button" className="remove-btn" onClick={handleRemoveClick}>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={handleRemove}
+      >
         Remove
       </button>
     </div>
@@ -28,7 +36,7 @@ const Rule = ({ id, index, value, onRemove, onInputChange }) => {
 };
 
 Rule.propTypes = {
-  id: PropTypes.number.isRequired, // Add id to PropTypes
+  id: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,

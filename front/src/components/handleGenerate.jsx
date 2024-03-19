@@ -1,5 +1,33 @@
 import axios from "axios";
 
+// Validation functions
+const validateTerminalSymbols = (symbols) => {
+  const regex = /^[a-z0-9,]+$/; // Allows small letters, numbers, and commas
+  return regex.test(symbols.trim());
+};
+
+const validateNonterminalSymbols = (symbols) => {
+  const regex = /^[A-Z,]+$/; // Allows capital letters and commas
+  return regex.test(symbols.trim());
+};
+
+const validateStartingSymbol = (symbol) => {
+  const regex = /^[A-Z]$/; // Allows a single capital letter
+  return regex.test(symbol.trim());
+};
+
+// Example validation function that checks for duplicate rules
+const validateRulesForDuplicates = (rules) => {
+  const ruleValues = rules.map(rule => rule.value);
+  const uniqueValues = new Set(ruleValues);
+  if (uniqueValues.size !== ruleValues.length) {
+    // There are duplicates
+    console.log("Duplicate rules found.")
+    return "Duplicate rules found.";
+  }
+  return null; // No duplicates
+};
+
 const handleGenerate = async (
   terminalSymbols,
   nonterminalSymbols,
@@ -13,6 +41,12 @@ const handleGenerate = async (
   setNonTerminalDuplicateWarning,
   setGeneratedData
 ) => {
+  // Convert rules from objects to strings for validation
+  const ruleStrings = rules.map(rule => rule.value);
+
+  const rulesError = validateRulesForDuplicates(rules);
+  setRulesError(rulesError);
+
   // Validation
   let hasError = false;
 
@@ -55,10 +89,6 @@ const handleGenerate = async (
   const hasTerminalDuplicates =
     new Set(terminalSymbolsArray).size !== terminalSymbolsArray.length;
 
-  // Check for validity of nonterminal and terminal symbols in rules
-  const nonterminalSet = new Set(nonterminalSymbols.split(","));
-  const terminalSet = new Set(terminalSymbols.split(","));
-
   if (hasTerminalDuplicates) {
     setTerminalDuplicateWarning(
       "Warning: You have entered duplicate symbols in Terminal symbols."
@@ -80,67 +110,53 @@ const handleGenerate = async (
     setNonTerminalDuplicateWarning(null);
   }
 
-  if (rules.length === 0) {
+  if (ruleStrings.length === 0) {
     setRulesError("You must have at least a rule.");
     hasError = true;
   } else {
-    // Check for empty rules
-    const hasEmptyRule = rules.some((rule) => rule === "");
+    const hasEmptyRule = ruleStrings.some((ruleString) => ruleString === "");
     if (hasEmptyRule) {
       setRulesError("Rules cannot be empty");
       hasError = true;
     } else {
-      // Check for rules without '-'
-      const hasRuleWithoutDash = rules.some((rule) => !rule.includes("-"));
+      const hasRuleWithoutDash = ruleStrings.some((ruleString) => !ruleString.includes("-"));
       if (hasRuleWithoutDash) {
         setRulesError("Each rule should contain a '-' symbol.");
         hasError = true;
       } else {
-        // More specific rule validation
-        const validRuleSymbols = rules.every((rule) => {
-          const [leftSide, rightSide] = rule.trim().split("-");
+        const nonterminalSet = new Set(nonterminalSymbols.split(","));
+        const terminalSet = new Set(terminalSymbols.split(","));
+        const validRuleSymbols = ruleStrings.every((ruleString) => {
+          const [leftSide, rightSide] = ruleString.trim().split("-");
           const nonterminal = leftSide.trim();
           const symbols = rightSide.trim().split(/\s+/);
 
-          // Check if the nonterminal symbol is in the set of nonterminal symbols
           if (!nonterminalSet.has(nonterminal)) {
-            setRulesError(
-              `Rule "${rule}" contains an invalid nonterminal symbol.`
-            );
+            setRulesError(`Rule "${ruleString}" contains an invalid nonterminal symbol.`);
             return false;
           }
 
-          // Check if all symbols on the right side are either in the terminal or nonterminal sets
           for (const symbol of symbols) {
             if (!nonterminalSet.has(symbol) && !terminalSet.has(symbol)) {
-              setRulesError(
-                `Rule "${rule}" contains an invalid symbol: ${symbol}`
-              );
+              setRulesError(`Rule "${ruleString}" contains an invalid symbol: ${symbol}`);
               return false;
             }
           }
 
-          // Check if the rule is of the form "nonterminal - terminal" or "nonterminal - terminal nonterminal"
           if (symbols.length === 1 && !terminalSet.has(symbols[0])) {
-            setRulesError(
-              `Rule "${rule}" must be of the form "NonterminalSymbol - TerminalSymbol".`
-            );
+            setRulesError(`Rule "${ruleString}" must be of the form "NonterminalSymbol - TerminalSymbol".`);
             return false;
           } else if (
             symbols.length > 1 &&
             !nonterminalSet.has(symbols[symbols.length - 1])
           ) {
-            setRulesError(
-              `Rule "${rule}" must end with a valid nonterminal symbol.`
-            );
+            setRulesError(`Rule "${ruleString}" must end with a valid nonterminal symbol.`);
             return false;
           } else if (
-            symbols.length > 2 || // Rule contains more than two symbols
-            (symbols.length === 2 && terminalSet.has(symbols[1])) // Rule has two symbols, but the second one is terminal
+            symbols.length > 2 ||
+            (symbols.length === 2 && terminalSet.has(symbols[1]))
           ) {
-            setRulesError(
-              `Rule "${rule}" must be of the form "NonterminalSymbol - TerminalSymbol NonterminalSymbol".`
-            );
+            setRulesError(`Rule "${ruleString}" must be of the form "NonterminalSymbol - TerminalSymbol NonterminalSymbol".`);
             return false;
           }
 
@@ -149,35 +165,27 @@ const handleGenerate = async (
 
         if (!validRuleSymbols) {
           hasError = true;
+        } else {
+          setRulesError(null);
         }
-        else {setRulesError(null)}
       }
     }
+  }
 
-    if (hasError) {
-      return;
-    }
+  if (hasError) {
+    return;
   }
 
   // Prepare data without duplicates
   const uniqueTerminalSymbols = Array.from(new Set(terminalSymbols.split(",")));
-  const uniqueNonterminalSymbols = Array.from(
-    new Set(nonterminalSymbols.split(","))
-  );
-
-  if (!validateTerminalSymbols(terminalSymbols)) {
-    setTerminalSymbolsError("Terminal symbols should be... ");
-  } else {
-    setTerminalSymbolsError(null); // Reset error if validation passes
-  }
-  
+  const uniqueNonterminalSymbols = Array.from(new Set(nonterminalSymbols.split(",")));
 
   // Data to send (using processed unique symbol sets)
   const requestData = {
-    terminalSymbols: uniqueTerminalSymbols.join(","), // Join back into comma-separated strings
+    terminalSymbols: uniqueTerminalSymbols.join(","),
     nonterminalSymbols: uniqueNonterminalSymbols.join(","),
     startingSymbol: startingSymbol,
-    rules: rules,
+    rules: ruleStrings, // Send the string representation of rules
   };
 
   try {
@@ -185,26 +193,10 @@ const handleGenerate = async (
       "http://localhost:5000/fetchData",
       requestData
     );
-    setGeneratedData(response.data); // Store received data
+    setGeneratedData(response.data);
   } catch (error) {
     console.error("Error generating language:", error);
   }
-};
-
-// Validation functions
-const validateTerminalSymbols = (symbols) => {
-  const regex = /^[a-z0-9,]+$/; // Allows small letters, numbers, and commas
-  return regex.test(symbols.trim());
-};
-
-const validateNonterminalSymbols = (symbols) => {
-  const regex = /^[A-Z,]+$/; // Allows capital letters and commas
-  return regex.test(symbols.trim());
-};
-
-const validateStartingSymbol = (symbol) => {
-  const regex = /^[A-Z]$/; // Allows a single capital letter
-  return regex.test(symbol.trim());
 };
 
 export default handleGenerate;

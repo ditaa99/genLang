@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 // import axios from "axios";
 import "../index.css";
 import Menu from "./Menu";
@@ -21,22 +22,25 @@ const Home = () => {
   const [generatedData, setGeneratedData] = useState(null);
 
   const addRule = () => {
-    setRules((prevRules) => [...prevRules, { id: Date.now(), value: "" }]);
+    setRules((prevRules) => [...prevRules, { id: uuidv4(), value: "" }]);
   };
 
-  const handleRuleChange = (ruleId, updatedValue) => {
+  const handleRuleChange = (id, updatedValue) => {
     setRules((prevRules) => {
-      return prevRules.map((rule) =>
-        rule.id === ruleId ? { ...rule, value: updatedValue.trim() } : rule
+      const updatedRules = prevRules.map((rule) =>
+        rule.id === id ? { ...rule, value: updatedValue.trim() } : rule
       );
+      return updatedRules;
     });
   };
 
-  const onRemove = (ruleId) => {
-    setRules((currentRules) =>
-      currentRules.filter((rule) => rule.id !== ruleId)
-    );
+  const onRemove = (id) => {
+    setRules((prevRules) => prevRules.filter((rule) => rule.id !== id));
   };
+
+  // const onInputChange = (index, updatedValue) => {
+  //   handleRuleChange(index, updatedValue);
+  // };
 
   const handleGenerateClick = () => {
     handleGenerate(
