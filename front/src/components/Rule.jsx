@@ -17,7 +17,7 @@ const Rule = ({ id, index, value, onInputChange, onRemove }) => {
   return (
     <div className="rule-row">
       <p>
-      {index + 1}: &nbsp; 
+      {index + 1}. &nbsp; 
         <input
           type="text"
           value={ruleValue}
