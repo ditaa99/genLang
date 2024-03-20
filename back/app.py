@@ -76,6 +76,13 @@ def generate_strings_route():
     
     # Convert set to list and return in the response
     return jsonify(list(generated_strings))
+    # Print the generated strings in the console
+    print("Generated strings:")
+    for string in generated_strings:
+        print(string)
+    
+    # Convert set to list and return in the response
+    return jsonify(list(generated_strings))
 
 
 

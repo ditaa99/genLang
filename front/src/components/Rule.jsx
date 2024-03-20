@@ -36,7 +36,7 @@ const Rule = ({ id, index, value, onInputChange, onRemove }) => {
 };
 
 Rule.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
