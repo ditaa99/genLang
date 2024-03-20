@@ -17,7 +17,7 @@ const Rule = ({ id, index, value, onInputChange, onRemove }) => {
   return (
     <div className="rule-row">
       <p>
-      {index + 1}: &nbsp; 
+      {index + 1}. &nbsp; 
         <input
           type="text"
           value={ruleValue}
@@ -36,7 +36,7 @@ const Rule = ({ id, index, value, onInputChange, onRemove }) => {
 };
 
 Rule.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
