@@ -20,7 +20,7 @@ const validateRulesForDuplicates = (rules) => {
   const ruleValues = rules.map(rule => rule.value);
   const uniqueValues = new Set(ruleValues);
 
-  return uniqueValues.size !== ruleValues.length ? "Duplicate rules found." : null;
+  return uniqueValues.size !== ruleValues.length ? <span className="warning-message">Duplicate rules found.</span> : null;
 };
 
 
@@ -35,7 +35,8 @@ const handleGenerate = async (
   setRulesError,
   setTerminalDuplicateWarning,
   setNonTerminalDuplicateWarning,
-  setGeneratedData
+  setGeneratedData,
+  setRulesDuplicateWarning
 ) => {
   // Convert rules from objects to strings for validation
   const ruleStrings = rules.map((rule) => rule.value);
@@ -43,7 +44,9 @@ const handleGenerate = async (
   // Rule validation
   const rulesError = validateRulesForDuplicates(rules);
   setRulesError(rulesError); // Set error if there are duplicates
+  setRulesDuplicateWarning(rulesError); // Set warning message for duplicate rules
 
+ 
 
   // Validation
   let hasError = false;
