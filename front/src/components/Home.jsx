@@ -21,6 +21,12 @@ const Home = () => {
     useState(null);
   const [generatedData, setGeneratedData] = useState(null);
 
+  const [rulesDuplicateWarning, setRulesDuplicateWarning] = useState(null);
+
+  // Pass the setRulesDuplicateWarning function as a parameter to validateRulesForDuplicates
+  // const duplicateRules = validateRulesForDuplicates(rules, setRulesDuplicateWarning);
+  
+
   const addRule = () => {
     setRules((prevRules) => [...prevRules, { id: uuidv4(), value: "" }]);
   };
@@ -54,7 +60,8 @@ const Home = () => {
       setRulesError,
       setTerminalDuplicateWarning,
       setNonTerminalDuplicateWarning,
-      setGeneratedData
+      setGeneratedData,
+      setRulesDuplicateWarning
     );
   };
 
@@ -134,6 +141,8 @@ const Home = () => {
             />
           ))}
           <div className="error-message">{rulesError}</div>
+          {rulesDuplicateWarning && <p>{rulesDuplicateWarning}</p>}
+
         </div>
       </div>
 

@@ -16,17 +16,13 @@ const validateStartingSymbol = (symbol) => {
   return regex.test(symbol.trim());
 };
 
-// Example validation function that checks for duplicate rules
 const validateRulesForDuplicates = (rules) => {
   const ruleValues = rules.map(rule => rule.value);
   const uniqueValues = new Set(ruleValues);
-  if (uniqueValues.size !== ruleValues.length) {
-    // There are duplicates
-    console.log("Duplicate rules found.")
-    return "Duplicate rules found.";
-  }
-  return null; // No duplicates
+
+  return uniqueValues.size !== ruleValues.length ? "Duplicate rules found." : null;
 };
+
 
 const handleGenerate = async (
   terminalSymbols,
@@ -42,10 +38,12 @@ const handleGenerate = async (
   setGeneratedData
 ) => {
   // Convert rules from objects to strings for validation
-  const ruleStrings = rules.map(rule => rule.value);
+  const ruleStrings = rules.map((rule) => rule.value);
 
+  // Rule validation
   const rulesError = validateRulesForDuplicates(rules);
-  setRulesError(rulesError);
+  setRulesError(rulesError); // Set error if there are duplicates
+
 
   // Validation
   let hasError = false;
@@ -119,7 +117,9 @@ const handleGenerate = async (
       setRulesError("Rules cannot be empty");
       hasError = true;
     } else {
-      const hasRuleWithoutDash = ruleStrings.some((ruleString) => !ruleString.includes("-"));
+      const hasRuleWithoutDash = ruleStrings.some(
+        (ruleString) => !ruleString.includes("-")
+      );
       if (hasRuleWithoutDash) {
         setRulesError("Each rule should contain a '-' symbol.");
         hasError = true;
@@ -132,31 +132,41 @@ const handleGenerate = async (
           const symbols = rightSide.trim().split(/\s+/);
 
           if (!nonterminalSet.has(nonterminal)) {
-            setRulesError(`Rule "${ruleString}" contains an invalid nonterminal symbol.`);
+            setRulesError(
+              `Rule "${ruleString}" contains an invalid nonterminal symbol.`
+            );
             return false;
           }
 
           for (const symbol of symbols) {
             if (!nonterminalSet.has(symbol) && !terminalSet.has(symbol)) {
-              setRulesError(`Rule "${ruleString}" contains an invalid symbol: ${symbol}`);
+              setRulesError(
+                `Rule "${ruleString}" contains an invalid symbol: ${symbol}`
+              );
               return false;
             }
           }
 
           if (symbols.length === 1 && !terminalSet.has(symbols[0])) {
-            setRulesError(`Rule "${ruleString}" must be of the form "NonterminalSymbol - TerminalSymbol".`);
+            setRulesError(
+              `Rule "${ruleString}" must be of the form "NonterminalSymbol - TerminalSymbol".`
+            );
             return false;
           } else if (
             symbols.length > 1 &&
             !nonterminalSet.has(symbols[symbols.length - 1])
           ) {
-            setRulesError(`Rule "${ruleString}" must end with a valid nonterminal symbol.`);
+            setRulesError(
+              `Rule "${ruleString}" must end with a valid nonterminal symbol.`
+            );
             return false;
           } else if (
             symbols.length > 2 ||
             (symbols.length === 2 && terminalSet.has(symbols[1]))
           ) {
-            setRulesError(`Rule "${ruleString}" must be of the form "NonterminalSymbol - TerminalSymbol NonterminalSymbol".`);
+            setRulesError(
+              `Rule "${ruleString}" must be of the form "NonterminalSymbol - TerminalSymbol NonterminalSymbol".`
+            );
             return false;
           }
 
@@ -178,7 +188,9 @@ const handleGenerate = async (
 
   // Prepare data without duplicates
   const uniqueTerminalSymbols = Array.from(new Set(terminalSymbols.split(",")));
-  const uniqueNonterminalSymbols = Array.from(new Set(nonterminalSymbols.split(",")));
+  const uniqueNonterminalSymbols = Array.from(
+    new Set(nonterminalSymbols.split(","))
+  );
 
   // Data to send (using processed unique symbol sets)
   const requestData = {

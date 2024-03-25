@@ -18,7 +18,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/fetchData', methods=['POST'])
+"""@app.route('/fetchData', methods=['POST'])
 def process_text():
     data = request.get_json()
     
@@ -40,8 +40,50 @@ def process_text():
     print("Received data:", grammar_dict)
     
     # Return the constructed dictionary in the response
-    return jsonify(grammar_dict)
+    return jsonify(grammar_dict)"""
 
+@app.route('/fetchData', methods=['POST'])
+def process_text():
+    data = request.get_json()
+    
+    # Extracting data from the request
+    terminal_symbols = data.get('terminalSymbols')
+    nonterminal_symbols = data.get('nonterminalSymbols')
+    starting_symbol = data.get('startingSymbol')
+    rules = data.get('rules')
+    
+    # Constructing the dictionary
+    grammar_dict = {
+        'terminal_symbols': terminal_symbols,
+        'nonterminal_symbols': nonterminal_symbols,
+        'starting_symbol': starting_symbol,
+        'rules': rules
+    }
+
+    # Print received data and constructed dictionary to the console
+    print("Received data:", grammar_dict)
+    
+    # Check if any rule with the starting symbol has only one terminal symbol on the right-hand side
+    single_terminal_rules = []
+    for rule in rules:
+        if rule[0] == starting_symbol and len(rule[1]) == 1 and rule[1][0] in terminal_symbols:
+            single_terminal_rules.append(rule)
+    
+    # Find the shortest word formed by the terminal symbol in the single terminal rules
+    shortest_word = None
+    for rule in single_terminal_rules:
+        word = rule[1][0]
+        if shortest_word is None or len(word) < len(shortest_word):
+            shortest_word = word
+    
+    # Prepare response data
+    response_data = {
+        'grammar_dict': grammar_dict,
+        'single_terminal_rules': single_terminal_rules,
+        'shortest_word': shortest_word
+    }
+    return jsonify(grammar_dict)
+    # return jsonify(response_data)
 
 
 def generate_strings(terminal_symbols, starting_symbol, rules, max_length=10):
