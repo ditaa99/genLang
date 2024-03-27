@@ -102,7 +102,7 @@ const Examples = () => {
           </b>
         </p>
 
-        <h3>Type 3: Regular Grammar</h3>
+        <h3>Type 3: Regular Grammars</h3>
         <p>
           If given a grammar like this:
           <b></b> G=〈&#123;a,b&#125;, &#123;S, A, B&#125;, S,
