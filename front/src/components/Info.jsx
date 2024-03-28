@@ -54,7 +54,7 @@ const Info = () => {
        </p>
        {/* <p>left handside (left from the dash) one capital (nonterminal symbol only) and the right handside one or two elements (either one terminal only or nonterminal terminal)</p> */}
         <p>
-        • When inputting the rules, make sure to have space in between terminal and nonterminal symbols </p>
+        • When inputting the rules, make sure to no have space on the right handside </p>
         <p>The accepted forms of the rules are: <br/>
         • nontermial - terminal<br/>
         • nontermial - terminal nontermial

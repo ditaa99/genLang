@@ -17,12 +17,13 @@ const validateStartingSymbol = (symbol) => {
 };
 
 const validateRulesForDuplicates = (rules) => {
-  const ruleValues = rules.map(rule => rule.value);
+  const ruleValues = rules.map((rule) => rule.value);
   const uniqueValues = new Set(ruleValues);
 
-  return uniqueValues.size !== ruleValues.length ? <span className="warning-message">Duplicate rules found.</span> : null;
+  return uniqueValues.size !== ruleValues.length ? (
+    <span className="warning-message">Warning: Duplicate rules found.</span>
+  ) : null;
 };
-
 
 const handleGenerate = async (
   terminalSymbols,
@@ -45,8 +46,6 @@ const handleGenerate = async (
   const rulesError = validateRulesForDuplicates(rules);
   setRulesError(rulesError); // Set error if there are duplicates
   setRulesDuplicateWarning(rulesError); // Set warning message for duplicate rules
-
- 
 
   // Validation
   let hasError = false;
@@ -132,7 +131,7 @@ const handleGenerate = async (
         const validRuleSymbols = ruleStrings.every((ruleString) => {
           const [leftSide, rightSide] = ruleString.trim().split("-");
           const nonterminal = leftSide.trim();
-          const symbols = rightSide.trim().split(/\s+/);
+          const symbols = rightSide.trim().split(/(?=\S)/); // Split each symbol without considering spaces between them
 
           if (!nonterminalSet.has(nonterminal)) {
             setRulesError(
