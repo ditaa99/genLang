@@ -12,128 +12,84 @@ DELETE
 
 a few more methods, but these are the most used ones'''
 
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
 
-"""@app.route('/fetchData', methods=['POST'])
-def process_text():
-    data = request.get_json()
-    
-    # Extracting data from the request
-    terminal_symbols = data.get('terminalSymbols')
-    nonterminal_symbols = data.get('nonterminalSymbols')
-    starting_symbol = data.get('startingSymbol')
-    rules = data.get('rules')
-    
-    # Constructing the dictionary
-    grammar_dict = {
-        'terminal_symbols': terminal_symbols,
-        'nonterminal_symbols': nonterminal_symbols,
-        'starting_symbol': starting_symbol,
-        'rules': rules
-    }
+def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length=20):
+    # Convert symbols to sets for faster lookup
+    terminal_symbols = set(terminal_symbols)
+    nonterminal_symbols = set(nonterminal_symbols)
 
-    # Print received data and constructed dictionary to the console
-    print("Received data:", grammar_dict)
-    
-    # Return the constructed dictionary in the response
-    return jsonify(grammar_dict)"""
+    # Create a dictionary to represent the grammar
+    grammar = {}
+    for rule in rules:
+        if "-" in rule:
+            lhs, rhs = rule.split("-")
+            lhs = lhs.strip()  # Remove any leading/trailing whitespace
+            rhs = rhs.strip()  # Remove any leading/trailing whitespace
+            if lhs in grammar:
+                grammar[lhs].append(rhs)
+            else:
+                grammar[lhs] = [rhs]
+        else:
+            print(f"Skipping malformed rule: {rule}")
+
+    # Initialize the language set
+    language = set()
+
+    # Helper function to generate words
+    def generate_words(current_string, current_length):
+        # If the current string consists of only terminal symbols, add it to the language
+        if all(symbol in terminal_symbols for symbol in current_string):
+            language.add(current_string)
+            return
+
+        # Check if the current length exceeds the maximum allowed length
+        if current_length >= max_length:
+            return
+
+        # Check if the current string ends with a non-terminal symbol
+        last_symbol = current_string[-1] if current_string else starting_symbol
+        if last_symbol in nonterminal_symbols:
+            for rhs in grammar.get(last_symbol, []):
+                generate_words(current_string[:-1] + rhs, current_length + len(rhs))
+
+    # Call the helper function with the starting symbol
+    generate_words(starting_symbol, len(starting_symbol))
+
+    return language
 
 @app.route('/fetchData', methods=['POST'])
 def process_text():
     data = request.get_json()
-    
+
     # Extracting data from the request
     terminal_symbols = data.get('terminalSymbols')
     nonterminal_symbols = data.get('nonterminalSymbols')
     starting_symbol = data.get('startingSymbol')
     rules = data.get('rules')
-    
-    # Constructing the dictionary
-    grammar_dict = {
+
+    # Generate the language
+    language = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules)
+
+    # Prepare response data
+    response_data = {
         'terminal_symbols': terminal_symbols,
         'nonterminal_symbols': nonterminal_symbols,
         'starting_symbol': starting_symbol,
-        'rules': rules
+        'rules': rules,
+        'language': list(language)
     }
 
-    # Print received data and constructed dictionary to the console
-    print("Received data:", grammar_dict)
-    
-    # Check if any rule with the starting symbol has only one terminal symbol on the right-hand side
-    single_terminal_rules = []
-    for rule in rules:
-        if rule[0] == starting_symbol and len(rule[1]) == 1 and rule[1][0] in terminal_symbols:
-            single_terminal_rules.append(rule)
-    
-    # Find the shortest word formed by the terminal symbol in the single terminal rules
-    shortest_word = None
-    for rule in single_terminal_rules:
-        word = rule[1][0]
-        if shortest_word is None or len(word) < len(shortest_word):
-            shortest_word = word
-    
-    # Prepare response data
-    response_data = {
-        'grammar_dict': grammar_dict,
-        'single_terminal_rules': single_terminal_rules,
-        'shortest_word': shortest_word
-    }
-    return jsonify(grammar_dict)
-    # return jsonify(response_data)
-
-
-def generate_strings(terminal_symbols, starting_symbol, rules, max_length=10):
-    generated_strings = set()
-
-    def generate(current_string, remaining_length):
-        if remaining_length == 0:
-            generated_strings.add(current_string)
-            return
-        for rule in rules:
-            if rule[0] == starting_symbol:
-                generate(current_string + rule[1], remaining_length - 1)
-            elif rule[0] in current_string:
-                new_string = current_string.replace(rule[0], rule[1], 1)
-                generate(new_string, remaining_length)
-
-    generate(starting_symbol, max_length)
-    return generated_strings
-
-@app.route('/generateStrings', methods=['POST'])
-def generate_strings_route():
-    data = request.get_json()
-    
-    # Extracting data from the request
-    terminal_symbols = data.get('terminalSymbols')
-    starting_symbol = data.get('startingSymbol')
-    rules = data.get('rules')
-    max_length = data.get('maxLength', 10)  # Default maximum length is 10 if not provided
-    
-    # Generate strings from the grammar
-    generated_strings = generate_strings(terminal_symbols, starting_symbol, rules, max_length)
-    
-    # Convert set to list and return in the response
-    return jsonify(list(generated_strings))
-
-    # Print the generated strings in the console
-    print("Generated strings:")
-    for string in generated_strings:
-        print(string)
-    
-    # Convert set to list and return in the response
-    return jsonify(list(generated_strings))
-
-
+    return jsonify(response_data)
 
 @app.route("/")
 def home():
     return "Hi! I'm backend :)"
 
-if __name__ == "__main__":  
+if __name__ == "__main__":
     app.run(debug=True)
-
-

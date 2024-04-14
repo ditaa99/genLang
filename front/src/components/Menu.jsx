@@ -7,6 +7,9 @@ const Menu = () => {
   const iconClick = () => {
     navigate("/");
   };
+  const saveClick = () =>{
+// save the file
+  };
   const examplesClick = () => {
     navigate("/examples");
   };
@@ -20,7 +23,7 @@ const Menu = () => {
       <button type="button" value="Home" className="menu-item"onClick={iconClick}>
         Home
       </button>
-      <button type="button" value="Save" className="menu-item">
+      <button type="button" value="Save" className="menu-item" onClick={saveClick}>
         Save
       </button>
       {/* <button type="button" value="Import" className="menu-item">

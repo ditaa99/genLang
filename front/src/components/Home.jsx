@@ -6,6 +6,7 @@ import Menu from "./Menu";
 import Rule from "./Rule";
 import handleGenerate from "./handleGenerate";
 
+
 const Home = () => {
   const [terminalSymbols, setTerminalSymbols] = useState("");
   const [nonterminalSymbols, setNonterminalSymbols] = useState("");
@@ -25,7 +26,6 @@ const Home = () => {
 
   // Pass the setRulesDuplicateWarning function as a parameter to validateRulesForDuplicates
   // const duplicateRules = validateRulesForDuplicates(rules, setRulesDuplicateWarning);
-  
 
   const addRule = () => {
     setRules((prevRules) => [...prevRules, { id: uuidv4(), value: "" }]);
@@ -142,11 +142,10 @@ const Home = () => {
           ))}
           <div className="error-message">{rulesError}</div>
           {rulesDuplicateWarning && <p>{rulesDuplicateWarning}</p>}
-
         </div>
       </div>
 
-      <div className="solution">
+      {/* <div className="solution">
         <button
           type="button"
           value="Generate"
@@ -156,13 +155,87 @@ const Home = () => {
           Generate
         </button>
 
-        {generatedData && (
+        {/* {generatedData && (
           <div>
             <h2>Received data:</h2>
             <p>Terminal Symbols: {generatedData.terminal_symbols}</p>
             <p>Nonterminal Symbols: {generatedData.nonterminal_symbols}</p>
             <p>Starting Symbol: {generatedData.starting_symbol}</p>
             <p>Rules: {JSON.stringify(generatedData.rules)}</p>
+          </div>
+        )} *
+
+        {generatedData && (
+          <div>
+            <h2>Processed Data:</h2>
+            {generatedData.single_terminal_rules.length > 0 ? (
+              <div>
+                <h3>Rules leading to a terminal symbol:</h3>
+                <ul>
+                  {generatedData.single_terminal_rules.map((rule, index) => (
+                    <li key={index}>{rule}</li>
+                  ))}
+                </ul>
+                {generatedData.shortest_word && (
+                  <p>
+                    Shortest word from rule #{" "}
+                    {generatedData.single_terminal_rules.findIndex(
+                      (r) =>
+                        r.split(" - ")[1][0] === generatedData.shortest_word
+                    ) + 1}{" "}
+                    is: {generatedData.shortest_word}
+                  </p>
+                )}
+              </div>
+            ) : (
+              <p>
+                No rules directly generate a terminal symbol from the starting
+                symbol.
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* {generatedData && (
+  <div>
+    <h2>Processed Data:</h2>
+    {generatedData.single_terminal_rules.length > 0 ? (
+      <div>
+        <h3>Rules leading to a terminal symbol:</h3>
+        <ul>
+          {generatedData.single_terminal_rules.map((rule, index) => (
+            <li key={index}>{rule}</li>
+          ))}
+        </ul>
+        {generatedData.shortest_word && (
+          <p>Shortest word found: {generatedData.shortest_word}</p>
+        )}
+      </div>
+    ) : (
+      <p>No rules directly generate a terminal symbol from the starting symbol.</p>
+    )}
+  </div>
+)} *
+      </div> */}
+      <div className="solution">
+        <button type="button" value="Generate" className="btn" onClick={handleGenerateClick}>
+          Generate
+        </button>
+
+        {generatedData && (
+          <div>
+            {generatedData.language.length > 0 ? (
+              <div>
+                <h3>Generated Language:</h3>
+                <ul>
+                  {generatedData.language.map((word, index) => (
+                    <li key={index}>{word}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p>No words generated from the given grammar.</p>
+            )}
           </div>
         )}
       </div>
