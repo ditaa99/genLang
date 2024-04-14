@@ -148,7 +148,7 @@ const Examples = () => {
         <p>
           In general, we can say that the generated language is:{" "}
           <b>
-            L(G) = &#123;a<sup>n</sup> n a<sup>k</sup>; n ∈ ℕ, n &ge; 1, and
+            L(G) = &#123;a<sup>n</sup> b a<sup>k</sup>; n ∈ ℕ, n &ge; 1, and
             k=&#123;0, 1&#125;&#125;
           </b>
         </p>
