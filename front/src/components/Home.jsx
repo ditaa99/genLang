@@ -144,28 +144,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div className="solution">
-        <button type="button" value="Generate" className="btn" onClick={handleGenerateClick}>
-          Generate
-        </button>
-
-        {generatedData && (
-          <div>
-            {generatedData.language.length > 0 ? (
-              <div>
-                <h3>Generated Language:</h3>
-                <ul>
-                  {generatedData.language.map((word, index) => (
-                    <li key={index}>{word}</li>
-                  ))}
-                </ul>
-              </div>
-            ) : (
-              <p>No words generated from the given grammar.</p>
-            )}
-          </div>
-        )}
-      </div> */}
       <div className="solution">
         <button
           type="button"
@@ -177,27 +155,41 @@ const Home = () => {
         </button>
         {generatedData && (
           <div>
-            <h3>Generated Language:</h3>
             {generatedData.language && generatedData.language.length > 0 ? (
               <div>
-                {generatedData.shortest_words && generatedData.shortest_words.length > 0 && (
-                  <p>Shortest word(s): {generatedData.shortest_words.join(", ")}</p>
-                )}
-                {generatedData.other_words && generatedData.other_words.length > 0 && (
-                  <p>Other words: {generatedData.other_words.join(", ")}</p>
-                )}
-                <ul>
-                  {generatedData.language.map((word, index) => (
-                    <li key={index}>{word}</li>
-                  ))}
-                </ul>
+                {generatedData.shortest_words &&
+                  generatedData.shortest_words.length > 0 && (
+                    <p>
+                      Shortest word(s):{" "}
+                      {generatedData.shortest_words.join(", ")}
+                    </p>
+                  )}
+                {/* {generatedData.other_words &&
+                  generatedData.other_words.length > 0 && (
+                    <p>Other words: {generatedData.other_words.join(", ")}</p>
+                  )} */}
+                {generatedData.other_words &&
+                  generatedData.other_words.length > 0 && (
+                    <p>
+                      Other words:
+                      {generatedData.other_words.map((word, index) => (
+                        <div key={index}>{word}</div> // Each word on a separate line
+                      ))}
+                    </p>
+                  )}
               </div>
             ) : (
               <p>No words can be generated from the given grammar.</p>
             )}
-           
           </div>
         )}
+      </div>
+      <div className="lang">
+        <h3>Generated Language:</h3>
+        {/* this is just a placeholder */}
+        <p className="language">
+          L(G) = &#123;a<sup>n</sup>b<sup>m</sup>; n,m ∈ ℕ, n &lt; m &#125;
+        </p>
       </div>
     </div>
   );

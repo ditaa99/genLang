@@ -39,24 +39,48 @@ const Examples = () => {
           left of C-s and convert B-s to b-s and C-s to c-s, ensuring that the
           number of a-s, b-s, and c-s remain equal.
         </p>
-        <p>Shortest word can be generated this way: 
-        S <CustomArrow overArr="#2" /> aBC <CustomArrow overArr="#4" /> abC <CustomArrow overArr="#6" />  abc.
+        <p>
+          Shortest word can be generated this way: S{" "}
+          <CustomArrow overArr="#2" /> aBC <CustomArrow overArr="#4" /> abC{" "}
+          <CustomArrow overArr="#6" /> abc.
         </p>
         <p>
           To generate a string in L, such as “aaabbbccc” (where n=3), you would
           follow these derivation steps:
-        <br/>
-        S <CustomArrow overArr="#1" /> aSBC <CustomArrow overArr="#1" /> aaSBCBC <CustomArrow overArr="#2" /> aaaBCBCBC <CustomArrow overArr="#3" /> aaaBBCCBC <CustomArrow overArr="#3" /> aaaBBBCCC <CustomArrow overArr="#4" /> aaabBBCCC <CustomArrow overArr="#5" /> aaabbBCCC <CustomArrow overArr="#5" /> aaabbbCCC <CustomArrow overArr="#6" /> aaabbbcCC <CustomArrow overArr="#7" /> aaabbbccC <CustomArrow overArr="#7" /> aaabbbccc </p>
-        <p>So in general, the amount of repetition of first rule, will define how much n is in the expression a<sup>n</sup>b<sup>n</sup>c<sup>n</sup>.
-        <br/>
-        S<CustomArrow overArr="#1" />aSBC<CustomArrow overArr="#1 (n-2)times" /> a<sup>n-1</sup>S(BC)<sup>n-1</sup> <CustomArrow overArr="#2" /> a<sup>n</sup>BCBCBC...BC<CustomArrow overArr="#3" />a<sup>n</sup>BBCCBC...BC <CustomArrow overArr="#3 (n-1)times" /> a<sup>n</sup>B<sup>n</sup>C<sup>n</sup> 
-        <CustomArrow overArr="#4" />a<sup>n</sup>bB<sup>n-1</sup>C<sup>n</sup> <CustomArrow overArr="#5 (n-1)times" /> a<sup>n</sup>b<sup>n</sup>C<sup>n</sup> <CustomArrow overArr="#6" /> a<sup>n</sup>b<sup>n</sup>cC<sup>n-1</sup> 
- <CustomArrow overArr="#7 (n-1)times" />a<sup>n</sup>b<sup>n</sup>c<sup>n</sup> 
+          <br />
+          S <CustomArrow overArr="#1" /> aSBC <CustomArrow overArr="#1" />{" "}
+          aaSBCBC <CustomArrow overArr="#2" /> aaaBCBCBC{" "}
+          <CustomArrow overArr="#3" /> aaaBBCCBC <CustomArrow overArr="#3" />{" "}
+          aaaBBBCCC <CustomArrow overArr="#4" /> aaabBBCCC{" "}
+          <CustomArrow overArr="#5" /> aaabbBCCC <CustomArrow overArr="#5" />{" "}
+          aaabbbCCC <CustomArrow overArr="#6" /> aaabbbcCC{" "}
+          <CustomArrow overArr="#7" /> aaabbbccC <CustomArrow overArr="#7" />{" "}
+          aaabbbccc{" "}
         </p>
-        <p>We can say that the generated language is:{" "}
+        <p>
+          So in general, the amount of repetition of first rule, will define how
+          much n is in the expression a<sup>n</sup>b<sup>n</sup>c<sup>n</sup>.
+          <br />
+          S<CustomArrow overArr="#1" />
+          aSBC
+          <CustomArrow overArr="#1 (n-2)times" /> a<sup>n-1</sup>S(BC)
+          <sup>n-1</sup> <CustomArrow overArr="#2" /> a<sup>n</sup>BCBCBC...BC
+          <CustomArrow overArr="#3" />a<sup>n</sup>BBCCBC...BC{" "}
+          <CustomArrow overArr="#3 (n-1)times" /> a<sup>n</sup>B<sup>n</sup>C
+          <sup>n</sup>
+          <CustomArrow overArr="#4" />a<sup>n</sup>bB<sup>n-1</sup>C<sup>n</sup>{" "}
+          <CustomArrow overArr="#5 (n-1)times" /> a<sup>n</sup>b<sup>n</sup>C
+          <sup>n</sup> <CustomArrow overArr="#6" /> a<sup>n</sup>b<sup>n</sup>cC
+          <sup>n-1</sup>
+          <CustomArrow overArr="#7 (n-1)times" />a<sup>n</sup>b<sup>n</sup>c
+          <sup>n</sup>
+        </p>
+        <p>
+          We can say that the generated language is:{" "}
           <b>
             L(G) = &#123;a<sup>n</sup>b<sup>n</sup>c<sup>n</sup>; n∈ ℕ &#125;
-          </b></p>
+          </b>
+        </p>
         <h3>Type 2: Context-independent Grammars</h3>
         <p>
           If given a grammar like this:
@@ -154,7 +178,6 @@ const Examples = () => {
         </p>
 
         <br />
-
       </div>
     </div>
   );

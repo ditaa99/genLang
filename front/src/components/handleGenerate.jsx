@@ -1,5 +1,6 @@
 import axios from "axios";
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = 'http://localhost:5173';
+axios.defaults.headers.post["Access-Control-Allow-Origin"] =
+  "http://localhost:5173";
 
 // Validation functions
 const validateTerminalSymbols = (symbols) => {

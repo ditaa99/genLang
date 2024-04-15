@@ -36,33 +36,48 @@ const Info = () => {
           This software is supposed to help you (users) understand how to find
           the language that your given grammar generates.
         </p>
-        <p>The software handles only <b>Regular Grammars</b> so far.</p>
+        <p>
+          The software handles only <b>Regular Grammars</b> so far.
+        </p>
 
         <h3>How to use:</h3>
 
         <p>On your left hand side input your:</p>
         <ul>
-          <li><b>Terminal symbol(s)</b> - denoted by lowercase letters or numbers.</li>
-          <li><b>Nonterminal symbol(s)</b> - denoted by uppercase letters.</li>
-          <li><b>Starting symbol</b> is one of the nonterminal symbols</li>
+          <li>
+            <b>Terminal symbol(s)</b> - denoted by lowercase letters or numbers.
+          </li>
+          <li>
+            <b>Nonterminal symbol(s)</b> - denoted by uppercase letters.
+          </li>
+          <li>
+            <b>Starting symbol</b> is one of the nonterminal symbols
+          </li>
         </ul>
         <p>
-        • When inputting multiple symbols separate them with commas and no
+          • When inputting multiple symbols separate them with commas and no
           space.
         </p>
-        <p>On your right hand side input your set of rules. <br/> Rules consist of a <b>nonterminal</b> symbol followed by a dash (-) and then a <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
-       </p>
-       {/* <p>left handside (left from the dash) one capital (nonterminal symbol only) and the right handside one or two elements (either one terminal only or nonterminal terminal)</p> */}
         <p>
-        • When inputting the rules, make sure to no have space on the right handside </p>
-        <p>The accepted forms of the rules are: <br/>
-        • nontermial - terminal<br/>
-        • nontermial - terminal nontermial
+          On your right hand side input your set of rules. <br /> Rules consist
+          of a <b>nonterminal</b> symbol followed by a dash (-) and then a{" "}
+          <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
         </p>
-        <p>The non-accepted forms of the rules are: <br/>
-        • nontermial - nontermial <br/>
-        • nontermial - nontermial terminal <br/>
-        • terminal - (anything) <br/>
+        {/* <p>left handside (left from the dash) one capital (nonterminal symbol only) and the right handside one or two elements (either one terminal only or nonterminal terminal)</p> */}
+        <p>
+          • When inputting the rules, make sure to no have space on the right
+          handside{" "}
+        </p>
+        <p>
+          The accepted forms of the rules are: <br />
+          • nontermial - terminal
+          <br />• nontermial - terminal nontermial
+        </p>
+        <p>
+          The non-accepted forms of the rules are: <br />
+          • nontermial - nontermial <br />
+          • nontermial - nontermial terminal <br />
+          • terminal - (anything) <br />
         </p>
         <p>
           Click on the <i>Generate</i> button and wait for the magic to happen

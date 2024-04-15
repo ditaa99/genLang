@@ -32,17 +32,8 @@
   color: #191e34;
   box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.4);
 }
-.menu-img{
+.menu-img {
   cursor: pointer;
-  /* padding: 2px; */
-  /* border: none;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  color: #262938;
-  font-family: sans-serif;
-  cursor: pointer;
-  box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.1);
-  transition-duration: 0.4s; */
 }
 
 /* LAYOUT */
@@ -50,18 +41,14 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  /* padding: 20px; */
-  /* border: 1px solid #ccc; */
   box-sizing: border-box;
 }
 
-/* Select the symb_rules div and make it a flex container with row direction */
 .symb_rules {
   display: flex;
   flex-direction: row;
 }
 
-/* Select the symbols and rules divs and make them have 100% width */
 .symbols,
 .rules {
   width: 100%;
@@ -70,7 +57,6 @@
   box-sizing: border-box;
 }
 
-/* Select the solution and lang divs and make them have 100% width */
 .solution,
 .lang {
   width: 100%;
@@ -83,27 +69,25 @@
   padding: 0 20px;
 }
 
-/* Set a fixed height for the parent div of the solution and lang divs and use overflow to handle excess content */
 .solution {
   height: 15rem;
 }
 
 .lang {
-  height: 10rem;
+  height: 8.7rem;
 }
 
 /* SYMBOLS */
 .symbols {
   display: flex;
   flex-direction: column;
-  
 }
-.symbol-row{
+.symbol-row {
   margin-bottom: 10px;
 }
 .input-wrapper {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
 .label {
@@ -118,12 +102,12 @@ textarea {
   border-color: #272f51;
 }
 
-.error-message{
+.error-message {
   color: red;
   font-size: small;
 }
 
-.warning-message{
+.warning-message {
   color: rgb(255, 174, 0);
   font-size: small;
 }
@@ -148,23 +132,21 @@ textarea {
   box-shadow: 5px 5px 10px 2px #191e3473;
 }
 
-.rules-top{
+.rules-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
 }
 
-
-
 /* RemoveButton */
 .rule-row {
-  display: flex; 
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
 .rule-text {
-  flex: 1; 
+  flex: 1;
 }
 
 .remove-btn {
@@ -179,4 +161,16 @@ textarea {
 
 .remove-btn:hover {
   box-shadow: 3px 3px 5px 1px rgba(252, 61, 61, 0.712);
+}
+
+/* LANGUAGE SECTION */
+.lang * {
+  color: #19104e;
+  margin-bottom: 0.7rem;
+}
+
+.language {
+  font-size: 1.2rem;
+  /* this font doesnt have a semi-bold  */
+  /* font-weight: 500; */
 }
