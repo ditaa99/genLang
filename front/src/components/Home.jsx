@@ -169,6 +169,22 @@ const Home = () => {
                     <p>Other words: {generatedData.other_words.join(", ")}</p>
                   )} */}
                 {generatedData.other_words &&
+                generatedData.other_words.length > 0 &&
+                generatedData.other_words[0] ===
+                  "This language only has one word." ? (
+                  <p>
+                    This language only has one word:{" "}
+                    {generatedData.shortest_words[0]}
+                  </p>
+                ) : (
+                  <p>
+                    Other words:
+                    {generatedData.other_words.map((word, index) => (
+                      <div key={index}>{word}</div>
+                    ))}
+                  </p>
+                )}
+                {/* {generatedData.other_words &&
                   generatedData.other_words.length > 0 && (
                     <p>
                       Other words:
@@ -176,7 +192,7 @@ const Home = () => {
                         <div key={index}>{word}</div> // Each word on a separate line
                       ))}
                     </p>
-                  )}
+                  )} */}
               </div>
             ) : (
               <p>No words can be generated from the given grammar.</p>
@@ -190,6 +206,18 @@ const Home = () => {
         <p className="language">
           L(G) = &#123;a<sup>n</sup>b<sup>m</sup>; n,m ∈ ℕ, n &lt; m &#125;
         </p>
+        {generatedData &&
+          generatedData.language &&
+          generatedData.language.length > 0 && (
+            <div>
+              <p>Language:</p>
+              <div>
+                {generatedData.language.map((word, index) => (
+                  <div key={index}>{word}</div>
+                ))}
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );
