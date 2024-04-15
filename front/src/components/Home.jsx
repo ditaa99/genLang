@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-// import axios from "axios";
 import "../index.css";
 import Menu from "./Menu";
 import Rule from "./Rule";
@@ -22,9 +21,6 @@ const Home = () => {
   const [generatedData, setGeneratedData] = useState(null);
 
   const [rulesDuplicateWarning, setRulesDuplicateWarning] = useState(null);
-
-  // Pass the setRulesDuplicateWarning function as a parameter to validateRulesForDuplicates
-  // const duplicateRules = validateRulesForDuplicates(rules, setRulesDuplicateWarning);
 
   const addRule = () => {
     setRules((prevRules) => [...prevRules, { id: uuidv4(), value: "" }]);
@@ -195,7 +191,9 @@ const Home = () => {
                   )} */}
               </div>
             ) : (
-              <p>No words can be generated from the given grammar.</p>
+              <p>No words can be generated from the given grammar. 
+                <br/> Please write a terminating rule!
+              </p>
             )}
           </div>
         )}
