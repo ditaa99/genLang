@@ -3,9 +3,9 @@ import '../../back/app.py';
 
 export default function setup(app) {
   app.use(
-    '../../back/app.py',  // Change '/api' to match your backend route
+    '../../back/app.py',  
     createProxyMiddleware({
-      target: 'http://127.0.0.1:5000/',  // Change to your backend URL
+      target: 'http://127.0.0.1:5000/',  
       changeOrigin: true,
     })
   );
