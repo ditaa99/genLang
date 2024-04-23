@@ -204,7 +204,6 @@ const handleGenerate = async (
     rules: ruleStrings, // Send the string representation of rules
   };
 
-
   try {
     const response = await axios.post(
       "http://localhost:5000/fetchData",
@@ -212,43 +211,19 @@ const handleGenerate = async (
     );
     console.log("Response from backend:", response); // Inspect the response
     setGeneratedData(response.data);
-    // ... rest of your code
-  } //catch (error) {
-  //   console.error("Error generating language:", error);
-  //   if (error.response) {
-  //     console.error("Backend error data:", error.response.data);
-  //     // Handle the error here, potentially displaying a message to the user
-  //   }
-  // }
-  catch (error) {
+  } catch (error) {
     if (error.response) {
       // Server responded with an error
-      console.error('Server Error:', error.response.data);
-      console.error('Server Error Status:', error.response.status);
+      console.error("Server Error:", error.response.data);
+      console.error("Server Error Status:", error.response.status);
     } else if (error.request) {
       // Request was made but no response received
-      console.error('Network Error:', error.request);
+      console.error("Network Error:", error.request);
     } else {
       // Something else happened while setting up the request
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
     }
   }
-
-  // try {
-  //   const response = await axios.post(
-  //     "http://localhost:5000/fetchData",
-  //     requestData
-  //   );
-  //   setGeneratedData(response.data);
-
-  //   // Display 'disp_lang' 
-  //   if (response.data.language_representation) {
-  //     document.querySelector('.language').textContent = `L(G) = ${response.data.language_representation}`;
-  // }
-
-  // } catch (error) {
-  //   console.error("Error generating language:", error);
-  // }
 };
 
 export default handleGenerate;

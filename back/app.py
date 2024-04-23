@@ -1,18 +1,3 @@
-''' G =<V, W, S, P>
-V - set of terminal symbols
-W - set of non-terminal symbols
-S - starting symbol
-P - set of rules (rules for generating sentences)
-'''
-
-'''
-GET
-POST
-PUT
-DELETE
-a few more methods, but these are the most used ones'''
-
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_cors import cross_origin
@@ -21,11 +6,10 @@ import re
 
 
 app = Flask(__name__)
-# cors = CORS(app) 
-# cors = CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+cors = CORS(app) 
 
 def find_repeating_unit(word):
-    """Tries to find the largest repeating unit at the start of the word."""
+    # Tries to find the largest repeating unit at the start of the word.
     for i in range(1, len(word) // 2 + 1):  # Check different unit lengths
         unit = word[:i]
         if word.startswith(unit * (len(word) // i)):
@@ -94,157 +78,6 @@ def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, ru
 
 
 
-'''def detect_pattern(base_words, words):
-    if not words:
-        return []
-
-    # Find the set of unique symbols
-    symbols = set(''.join(words))
-
-    patterns = []
-
-    # Check if the language consists of only one symbol
-    if len(symbols) == 1:
-        patterns.append(f"{symbols.pop()}^n")
-
-    # Check if the language consists of two or more symbols
-    # if len(symbols) >= 2:
-    #     # Create a sorted string of symbols for matching
-    #     sorted_symbols = ''.join(sorted(symbols))
-    if len(symbols) >= 2:
-        # Combine symbols into a single string for easier pattern matching
-        # combined_symbols = ''.join(symbols)
-        sorted_symbols = ''.join(sorted(symbols))
-        pattern = f"{sorted_symbols}"  # Match any order of symbols
-        pattern = re.compile(pattern)  # Compile the pattern for efficiency
-
-        if all(pattern.search(word) for word in base_words):
-            patterns.append(pattern.pattern)  # Append the full pattern string
-
-    # Check for Consecutive Substrings (more general than your previous permutation check)
-    all_substrings = set()
-    for word in words:
-        for i in range(1, len(word)):
-            for j in range(len(word) - i + 1):
-                substring = word[j:j+i]
-                all_substrings.add(substring) 
-
-    for substring in all_substrings:
-        if all(substring in word for word in base_words):
-            patterns.append(substring)
-
-    # Check for Alternating Patterns
-    for word in words:
-        if len(word) % 2 == 0:  # Check only words suitable for alternation
-            prefix = word[:len(word)//2]
-            if all(w.startswith(prefix) for w in base_words):
-                patterns.append(f"({prefix})*") 
-    
-    
-        # Check for permutations of symbols within words
-        # for perm in permutations(sorted_symbols):
-        #     pattern = "".join(f"{symbol}^n" for symbol in perm)
-        #     if all(word.startswith(pattern) for word in base_words):  # Compare to original words
-        #         patterns.append(pattern)
-        #         break
-        for perm in permutations(sorted_symbols):
-            pattern = "".join(f"{symbol}" for symbol in perm)  # No "^n" for substring matching
-            if all(pattern in word for word in base_words): 
-                patterns.append(pattern)
-                # break  # You might want to find all matching patterns, not just the first one
-
-    return patterns  
-'''
-
-# def detect_pattern(words):
-#     if not words:
-#         return []
-
-#     # Find the set of unique symbols
-#     symbols = set(''.join(words))
-
-#     patterns = []
-
-#     # Check if the language consists of only one symbol
-#     if len(symbols) == 1:
-#         patterns.append(f"{symbols.pop()}^n")
-
-#     # Check if the language consists of multiple symbols with one being a prefix of the other
-#     else:
-#         sorted_symbols = sorted(symbols)
-#         symbol_counts = [0] * len(sorted_symbols)
-#         for word in words:
-#             for i, symbol in enumerate(sorted_symbols):
-#                 if word.startswith(symbol):
-#                     symbol_counts[i] += 1
-#                     break
-
-#         pattern_parts = []
-#         exponent_letters = ['n', 'm', 'j', 'k', 'l']  # Use different letters for exponents
-#         for symbol, count in zip(sorted_symbols, symbol_counts):
-#             if count > 0:
-#                 exponent_letter = exponent_letters.pop(0)
-#                 pattern_parts.append(f"{symbol}^{exponent_letter}")
-
-#         if pattern_parts:
-#             patterns.append(''.join(pattern_parts))
-
-#     # If no clear pattern is detected, return an empty list
-#     return patterns
-
-
-'''def detect_pattern(words):
-    if not words:
-        return []
-
-    # Find the set of unique symbols
-    symbols = set(''.join(words))
-
-    patterns = []
-
-    # Check if the language consists of only one symbol
-    if len(symbols) == 1:
-        patterns.append(f"{symbols.pop()}^n")
-
-    # Check if the language consists of multiple parts separated by different symbols
-    else:
-        sorted_symbols = sorted(symbols)
-        symbol_counts = [0] * len(sorted_symbols)
-        pattern_parts = []
-        exponent_letters = ['n', 'm', 'j', 'k', 'l']
-
-        for word in words:
-            current_index = 0
-            current_part = []
-
-            while current_index < len(word):
-                symbol = word[current_index]
-                symbol_index = sorted_symbols.index(symbol)
-                symbol_counts[symbol_index] += 1
-
-                # Check if the current symbol is the same as the previous symbol in the current part
-                if current_part and current_part[-1][0] == symbol:
-                    current_part[-1][1] += 1
-                else:
-                    current_part.append([symbol, 1])
-
-                current_index += 1
-
-            for part in current_part:
-                symbol, count = part
-                if exponent_letters:
-                    exponent_letter = exponent_letters.pop(0)
-                    pattern_part = f"{symbol}^{exponent_letter}"
-                    pattern_parts.append(pattern_part)
-
-        if pattern_parts:
-            patterns.append(''.join(pattern_parts))
-
-    # If no clear pattern is detected, return an empty list
-    return patterns
-'''
-
-
 def detect_pattern(words):
     if not words:
         return []
@@ -280,43 +113,6 @@ def detect_pattern(words):
 
     # If no clear pattern is detected, return an empty list
     return patterns
-
-
-
-"""def detect_pattern(words):
-    if not words:
-        return []
-
-    # Find the set of unique symbols
-    symbols = set(''.join(words))
-
-    patterns = []
-
-    # Check if the language consists of only one symbol
-    if len(symbols) == 1:
-        patterns.append(f"{symbols.pop()}^n")
-
-    # Check if the language consists of multiple symbols with one being a prefix of the other
-    else:
-        sorted_symbols = sorted(symbols)
-        symbol_counts = [0] * len(sorted_symbols)
-        for word in words:
-            for i, symbol in enumerate(sorted_symbols):
-                if word.startswith(symbol):
-                    symbol_counts[i] += 1
-                    break
-
-        pattern_parts = []
-        for symbol, count in zip(sorted_symbols, symbol_counts):
-            if count > 0:
-                pattern_parts.append(f"{symbol}^n")
-
-        if pattern_parts:
-            patterns.append(''.join(pattern_parts))
-
-    # If no clear pattern is detected, return an empty list
-    return patterns
-"""
 
 
 def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length=20):

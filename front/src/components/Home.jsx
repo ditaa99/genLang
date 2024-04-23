@@ -160,10 +160,7 @@ const Home = () => {
                       {generatedData.shortest_words.join(", ")}
                     </p>
                   )}
-                {/* {generatedData.other_words &&
-                  generatedData.other_words.length > 0 && (
-                    <p>Other words: {generatedData.other_words.join(", ")}</p>
-                  )} */}
+
                 {generatedData.other_words &&
                 generatedData.other_words.length > 0 &&
                 generatedData.other_words[0] ===
@@ -180,15 +177,6 @@ const Home = () => {
                     ))}
                   </div>
                 )}
-                {/* {generatedData.other_words &&
-                  generatedData.other_words.length > 0 && (
-                    <p>
-                      Other words:
-                      {generatedData.other_words.map((word, index) => (
-                        <div key={index}>{word}</div> // Each word on a separate line
-                      ))}
-                    </p>
-                  )} */}
               </div>
             ) : (
               <p>
@@ -199,32 +187,10 @@ const Home = () => {
           </div>
         )}
       </div>
-      {/* <div className="lang">
-        <h3>Generated Language:</h3>
 
-        <p className="language">
-          L(G) = &#123;a<sup>n</sup>b<sup>m</sup>; n,m ∈ ℕ, n &lt; m &#125;
-        </p>
-
-      </div> */}
       <div className="lang">
         <h3>Generated Language:</h3>
 
-        {/* Formal Language Representation */}
-        {/* {generatedData && generatedData.language_representation && (
-          <p className="language">
-            L(G) = &#123; {generatedData.language_representation} &#125;
-          </p>
-        )} */}
-        {/* {generatedData && generatedData.language_representation ? (
-          generatedData.language_representation.map((pattern, index) => (
-            <p key={index} className="language">
-              L(G) = &#123; {pattern} &#125;
-            </p>
-          ))
-        ) : (
-          <p className="language">No language representation available</p>
-        )} */}
         {/* Formal Language Representation */}
         {generatedData && generatedData.language_representation && (
           <div>
@@ -235,19 +201,6 @@ const Home = () => {
             ))}
           </div>
         )}
-        {/* Generated Words */}
-        {/* {generatedData &&
-          generatedData.language &&
-          generatedData.language.length > 0 && (
-            <div className="generated-words">
-              <h4>Generated Words:</h4>
-              <ul>
-                {generatedData.language.map((word, index) => (
-                  <li key={index}>{word}</li>
-                ))}
-              </ul>
-            </div>
-          )} */}
       </div>
     </div>
   );
