@@ -7,9 +7,9 @@ const Menu = () => {
   const iconClick = () => {
     navigate("/");
   };
-  const saveClick = () =>{
-// save the file
-  };
+//   const saveClick = () =>{
+// // save the file
+//   };
   const examplesClick = () => {
     navigate("/examples");
   };
@@ -23,11 +23,8 @@ const Menu = () => {
       <button type="button" value="Home" className="menu-item"onClick={iconClick}>
         Home
       </button>
-      <button type="button" value="Save" className="menu-item" onClick={saveClick}>
+      {/* <button type="button" value="Save" className="menu-item" onClick={saveClick}>
         Save
-      </button>
-      {/* <button type="button" value="Import" className="menu-item">
-        Import
       </button> */}
       <button type="button" value="Examples" className="menu-item"onClick={examplesClick}>
         Examples

@@ -8,114 +8,9 @@ import re
 app = Flask(__name__)
 cors = CORS(app) 
 
-def find_repeating_unit(word):
-    # Tries to find the largest repeating unit at the start of the word.
-    for i in range(1, len(word) // 2 + 1):  # Check different unit lengths
-        unit = word[:i]
-        if word.startswith(unit * (len(word) // i)):
-            return unit
-    return None
 
 
-def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length=20):
-    # Convert symbols to sets for faster lookup
-    terminal_symbols = set(terminal_symbols)
-    nonterminal_symbols = set(nonterminal_symbols)
-
-    # Create a dictionary to represent the grammar
-    grammar = {}
-    for rule in rules:
-        if "->" in rule:
-            lhs, rhs = rule.split("->")
-            lhs = lhs.strip()  # Remove any leading/trailing whitespace
-            rhs = rhs.strip()  # Remove any leading/trailing whitespace
-            if lhs in grammar:
-                grammar[lhs].append(rhs)
-            else:
-                grammar[lhs] = [rhs]
-        else:
-            print(f"Skipping malformed rule: {rule}")
-
-    # Initialize the language set
-    language = set()
-    shortest_words = []
-
-    # Helper function to generate words
-    def generate_words(current_string, current_length):
-        nonlocal shortest_words
-        # If the current string consists of only terminal symbols, add it to the language
-        if all(symbol in terminal_symbols for symbol in current_string):
-            language.add(current_string)
-            if not shortest_words:
-                shortest_words.append(current_string)  # Add the first word as the shortest word
-            elif len(current_string) == len(shortest_words[0]):
-                shortest_words.append(current_string)  # Add words with the same length as the shortest words
-            return
-
-        # Check if the current length exceeds the maximum allowed length
-        if current_length >= max_length:
-            return
-
-        # Expand the current string by applying the grammar rules
-        for i in range(len(current_string)):
-            symbol = current_string[i]
-            if symbol in nonterminal_symbols:
-                for rhs in grammar.get(symbol, []):
-                    new_string = current_string[:i] + rhs + current_string[i+1:]
-                    generate_words(new_string, current_length + len(rhs) - 1)
-
-    # Call the helper function with the starting symbol
-    generate_words(starting_symbol, len(starting_symbol))
-
-    # Separate other words from shortest words
-    other_words = [word for word in language if word not in shortest_words]
-
-    # Detect the pattern
-    detected_pattern = detect_pattern(other_words)
-
-    # Return the language, shortest words, other words, and the detected pattern
-    return detected_pattern
-
-
-
-def detect_pattern(words):
-    if not words:
-        return []
-
-    # Find the set of unique symbols
-    symbols = set(''.join(words))
-
-    patterns = []
-
-    # Check if the language consists of only one symbol
-    if len(symbols) == 1:
-        patterns.append(f"{symbols.pop()}^n")
-
-    # Check if the language consists of multiple symbols with one being a prefix of the other
-    else:
-        sorted_symbols = sorted(symbols)
-        symbol_counts = [0] * len(sorted_symbols)
-        for word in words:
-            for i, symbol in enumerate(sorted_symbols):
-                if word.startswith(symbol):
-                    symbol_counts[i] += 1
-                    break
-
-        pattern_parts = []
-        exponent_letters = ['n', 'm', 'j', 'k', 'l']  # Use different letters for exponents
-        for symbol, count in zip(sorted_symbols, symbol_counts):
-            if count > 0:
-                exponent_letter = exponent_letters.pop(0)
-                pattern_parts.append(f"{symbol}^{exponent_letter}")
-
-        if pattern_parts:
-            patterns.append(''.join(pattern_parts))
-
-    # If no clear pattern is detected, return an empty list
-    return patterns
-
-
-def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length=20):
+def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length):
     # Convert symbols to sets for faster lookup
     terminal_symbols = set(terminal_symbols)
     nonterminal_symbols = set(nonterminal_symbols)
@@ -192,6 +87,90 @@ def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, ru
     # Return the language, shortest words, and other words
     return language, shortest_words, other_words, ''
 
+
+def find_repeating_unit(word):
+    # Tries to find the largest repeating unit at the start of the word.
+    for i in range(1, len(word) // 2 + 1):  # Check different unit lengths
+        unit = word[:i]
+        if word.startswith(unit * (len(word) // i)):
+            return unit
+    return None
+
+
+def detect_pattern(words):
+    if not words:
+        return []
+
+    # Find the set of unique symbols
+    symbols = set(''.join(words))
+
+    patterns = []
+
+    # Check if the language consists of only one symbol
+    if len(symbols) == 1:
+        patterns.append(f"{symbols.pop()}^n")
+
+    # Check if the language consists of multiple symbols with one being a prefix of the other
+    else:
+        sorted_symbols = sorted(symbols)
+        symbol_counts = [0] * len(sorted_symbols)
+        for word in words:
+            for i, symbol in enumerate(sorted_symbols):
+                if word.startswith(symbol):
+                    symbol_counts[i] += 1
+                    break
+
+        pattern_parts = []
+        exponent_letters = ['n', 'm', 'j', 'k', 'l']  # Use different letters for exponents
+        for symbol, count in zip(sorted_symbols, symbol_counts):
+            if count > 0:
+                exponent_letter = exponent_letters.pop(0)
+                pattern_parts.append(f"{symbol}^{exponent_letter}")
+
+        if pattern_parts:
+            patterns.append(''.join(pattern_parts))
+
+    # If no clear pattern is detected, return an empty list
+    return patterns
+
+'''
+def detect_pattern(words):
+    if not words:
+        return []
+
+    # Find the set of unique symbols
+    symbols = set(''.join(words))
+
+    patterns = []
+
+    # Check if the language consists of only one symbol
+    if len(symbols) == 1:
+        patterns.append(f"{symbols.pop()}^n")
+
+    # Check if the language consists of multiple symbols with one being a prefix of the other
+    else:
+        sorted_symbols = sorted(symbols)
+        symbol_counts = [0] * len(sorted_symbols) #not sorted but to go in the pattern order, needs to be modified
+        for word in words:
+            for i, symbol in enumerate(sorted_symbols):
+                if word.startswith(symbol):
+                    symbol_counts[i] += 1
+                    break
+
+        pattern_parts = []
+        exponent_letters = ['n', 'm', 'j', 'k', 'l']  # Use different letters for exponents
+        for symbol, count in zip(sorted_symbols, symbol_counts):
+            if count > 0:
+                exponent_letter = exponent_letters.pop(0)
+                pattern_parts.append(f"{symbol}^{exponent_letter}")
+
+        if pattern_parts:
+            patterns.append(''.join(pattern_parts))
+
+    # If no clear pattern is detected, return an empty list
+    return patterns
+'''
+
 def disp_lang(pattern):
     # Provides a displayable representation of the language pattern.
     return pattern if pattern else "No clear pattern detected"
@@ -209,9 +188,8 @@ def process_text():
     rules = data.get('rules')
 
     # Generate the language and find the shortest words
-    max_length = 30  # This is the maximum length of the words we are printing from the language
-    # language, shortest_words = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length)
-    language, shortest_words, other_words_or_error_message, _ = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length)
+    # max_length = 500  # This is the maximum length of the words we are printing from the language, for some reason it goes up till half of this
+    language, shortest_words, other_words_or_error_message, _ = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length = 30)
     # Sort the language set by word length
     sorted_language = sorted(list(language), key=len)
 
@@ -246,7 +224,7 @@ def process_text():
             'language': list(language),
             'shortest_words': shortest_words,
             'other_words': other_words_or_error_message,
-            # 'language_representation': disp_lang()
+            # 'language_representation': disp_lang(pattern),
             'language_representation': detected_pattern if detected_pattern else 'No clear pattern detected'    
     }
 

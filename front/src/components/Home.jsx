@@ -192,13 +192,30 @@ const Home = () => {
         <h3>Generated Language:</h3>
 
         {/* Formal Language Representation */}
-        {generatedData && generatedData.language_representation && (
+        {/* {generatedData && generatedData.language_representation && (
           <div>
             {generatedData.language_representation.map((pattern, index) => (
               <p key={index} className="language">
                 L(G) = &#123; {pattern} &#125;
               </p>
             ))}
+          </div>
+        )} */}
+        {generatedData && generatedData.language_representation && (
+          <div>
+            {/* Check if language_representation is an array */}
+            {Array.isArray(generatedData.language_representation) ? (
+              generatedData.language_representation.map((pattern, index) => (
+                <p key={index} className="language">
+                  L(G) = &#123; {pattern} &#125;
+                </p>
+              ))
+            ) : (
+              // If language_representation is not an array, display it directly
+              <p className="language">
+                L(G) = &#123; {generatedData.shortest_words[0]} &#125;
+              </p>
+            )}
           </div>
         )}
       </div>
