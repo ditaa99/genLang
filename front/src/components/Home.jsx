@@ -140,6 +140,10 @@ const Home = () => {
         </div>
       </div>
 
+      <div className="generationSteps">
+        Rules applied:
+      </div>
+
       <div className="solution">
         <button
           type="button"

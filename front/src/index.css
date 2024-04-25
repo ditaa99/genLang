@@ -58,6 +58,7 @@
 }
 
 .solution,
+.generationSteps,
 .lang {
   width: 100%;
   display: flex;
