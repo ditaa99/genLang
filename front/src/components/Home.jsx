@@ -19,6 +19,7 @@ const Home = () => {
   const [nonTerminalDuplicateWarning, setNonTerminalDuplicateWarning] =
     useState(null);
   const [generatedData, setGeneratedData] = useState(null);
+  const [generationSteps, setGenerationSteps] = useState([]);
 
   const [rulesDuplicateWarning, setRulesDuplicateWarning] = useState(null);
 
@@ -56,6 +57,7 @@ const Home = () => {
       setTerminalDuplicateWarning,
       setNonTerminalDuplicateWarning,
       setGeneratedData,
+      setGenerationSteps,
       setRulesDuplicateWarning
     );
   };
@@ -140,10 +142,6 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="generationSteps">
-        Rules applied:
-      </div>
-
       <div className="solution">
         <button
           type="button"
@@ -190,6 +188,14 @@ const Home = () => {
             )}
           </div>
         )}
+      </div>
+
+      <div className="generationSteps">
+        <p>Rules applied:</p>
+        {generationSteps &&
+          generationSteps.map((stepsArray, index) => (
+            <div key={index}>{stepsArray.join(", ")}</div>
+          ))}
       </div>
 
       <div className="lang">

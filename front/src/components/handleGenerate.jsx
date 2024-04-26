@@ -39,6 +39,7 @@ const handleGenerate = async (
   setTerminalDuplicateWarning,
   setNonTerminalDuplicateWarning,
   setGeneratedData,
+  setGenerationSteps,
   setRulesDuplicateWarning
 ) => {
   // Convert rules from objects to strings for validation
@@ -210,7 +211,12 @@ const handleGenerate = async (
       requestData
     );
     console.log("Response from backend:", response); // Inspect the response
-    setGeneratedData(response.data);
+    setGeneratedData({
+      ...response.data,
+      // generationSteps: response.data.generationSteps,
+      rules: response.data.rules,
+    });
+    setGenerationSteps(response.data.generationSteps);
   } catch (error) {
     if (error.response) {
       // Server responded with an error

@@ -9,7 +9,7 @@ app = Flask(__name__)
 cors = CORS(app) 
 
 
-
+# words generated
 def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length):
     # Convert symbols to sets for faster lookup
     terminal_symbols = set(terminal_symbols)
@@ -87,7 +87,70 @@ def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, ru
     # Return the language, shortest words, and other words
     return language, shortest_words, other_words, ''
 
+# words with rules
 
+def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length):
+    # Convert symbols to sets for faster lookup
+    terminal_symbols = set(terminal_symbols)
+    nonterminal_symbols = set(nonterminal_symbols)
+
+    # Create a dictionary to represent the grammar
+    grammar = {}
+    for rule in rules:
+        if "-" in rule:
+            lhs, rhs = rule.split("-")
+            lhs = lhs.strip()
+            rhs = rhs.strip()
+            if lhs in grammar:
+                grammar[lhs].append(rhs)
+            else:
+                grammar[lhs] = [rhs]
+        else:
+            print(f"Skipping malformed rule: {rule}")
+
+    # Check if grammar has terminals 
+    terminates = False
+    for lhs, rhss in grammar.items():
+        for rhs in rhss:
+            if all(symbol in terminal_symbols for symbol in rhs):
+                terminates = True
+                break
+
+    # If no rule terminates, return an error message
+    if not terminates:
+        return {}, []
+
+    # Initialize word tracking dictionary and generation steps list
+    words_with_rules = {}
+    generation_steps = {}
+
+    # Helper function to generate words with their derivation histories
+    def generate_words_with_rules(current_string, current_length, derivation_history):
+        # Check if the current string consists of only terminal symbols
+        if all(symbol in terminal_symbols for symbol in current_string):
+            words_with_rules[current_string] = derivation_history.copy()
+            generation_steps[current_string] = derivation_history.copy()  # Store the derivation history for the current word
+            return
+
+        # Check if the current length exceeds the maximum allowed length
+        if current_length >= max_length:
+            return
+
+        # Check if the current string ends with a non-terminal symbol
+        last_symbol = current_string[-1] if current_string else starting_symbol
+        if last_symbol in nonterminal_symbols:
+            for rhs in grammar.get(last_symbol, []):
+                new_derivation_history = derivation_history.copy()
+                new_derivation_history.append(f"{last_symbol} → {rhs}")
+                generate_words_with_rules(current_string[:-1] + rhs, current_length + len(rhs), new_derivation_history)
+
+    # Start generating words with an empty derivation history
+    generate_words_with_rules(starting_symbol, len(starting_symbol), [])
+
+    # Return the dictionary of words with their rules and the generation steps
+    return words_with_rules, list(generation_steps.values())
+
+# PATTERN
 def find_repeating_unit(word):
     # Tries to find the largest repeating unit at the start of the word.
     for i in range(1, len(word) // 2 + 1):  # Check different unit lengths
@@ -96,8 +159,9 @@ def find_repeating_unit(word):
             return unit
     return None
 
-
+# PATTERN
 def detect_pattern(words):
+    # print(words)
     if not words:
         return []
 
@@ -114,6 +178,7 @@ def detect_pattern(words):
     else:
         sorted_symbols = sorted(symbols)
         symbol_counts = [0] * len(sorted_symbols)
+        # symbol_counts = [1] * len(sorted_symbols)
         for word in words:
             for i, symbol in enumerate(sorted_symbols):
                 if word.startswith(symbol):
@@ -123,7 +188,7 @@ def detect_pattern(words):
         pattern_parts = []
         exponent_letters = ['n', 'm', 'j', 'k', 'l']  # Use different letters for exponents
         for symbol, count in zip(sorted_symbols, symbol_counts):
-            if count > 0:
+            if count >= 0:
                 exponent_letter = exponent_letters.pop(0)
                 pattern_parts.append(f"{symbol}^{exponent_letter}")
 
@@ -170,7 +235,7 @@ def detect_pattern(words):
     # If no clear pattern is detected, return an empty list
     return patterns
 '''
-
+# PATTERN
 def disp_lang(pattern):
     # Provides a displayable representation of the language pattern.
     return pattern if pattern else "No clear pattern detected"
@@ -199,6 +264,8 @@ def process_text():
     # Split the sorted list into shortest words and other words
     shortest_words = [word for word in sorted_language if len(word) == shortest_word_length]
     other_words = [word for word in sorted_language if len(word) > shortest_word_length]
+    words_and_rules, generation_steps = words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length=30)
+
     
     # Detect the pattern
     detected_pattern = detect_pattern(other_words)
@@ -212,7 +279,8 @@ def process_text():
             'nonterminal_symbols': nonterminal_symbols,
             'starting_symbol': starting_symbol,
             'rules': rules,
-            'errorMessage': other_words_or_error_message
+            'errorMessage': other_words_or_error_message,
+            # 'errorMessageRules' : error_message_rules
         }
     else:
         # It's a list of other words
@@ -225,8 +293,11 @@ def process_text():
             'shortest_words': shortest_words,
             'other_words': other_words_or_error_message,
             # 'language_representation': disp_lang(pattern),
-            'language_representation': detected_pattern if detected_pattern else 'No clear pattern detected'    
+            'language_representation': detected_pattern if detected_pattern else 'No clear pattern detected',
+            'words_with_rules': words_and_rules,
+            'generationSteps': generation_steps
     }
+
 
     return jsonify(response_data)
 
