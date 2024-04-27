@@ -142,7 +142,7 @@ const Home = () => {
         </div>
       </div>
 
-      <div className="solution">
+      {/* <div className="solution">
         <button
           type="button"
           value="Generate"
@@ -188,14 +188,69 @@ const Home = () => {
             )}
           </div>
         )}
+      </div> */}
+      <div className="solution">
+        <button
+          type="button"
+          value="Generate"
+          className="btn"
+          onClick={handleGenerateClick}
+        >
+          Generate
+        </button>
+        {generatedData && (
+          <div>
+            {generatedData.language && generatedData.language.length > 0 ? (
+              <div>
+                {generatedData.shortest_words &&
+                  generatedData.shortest_words.length > 0 && (
+                    <p>
+                      Shortest word(s):{" "}
+                      {generatedData.shortest_words.join(", ")}
+                    </p>
+                  )}
+
+                {generatedData.other_words &&
+                generatedData.other_words.length > 0 &&
+                generatedData.other_words[0] ===
+                  "This language only has one word." ? (
+                  <p>
+                    This language only has one word:{" "}
+                    {generatedData.shortest_words[0]}
+                  </p>
+                ) : (
+                  <div className="words">
+                    Other words:
+                    {/* Filter out the shortest words */}
+                    {generatedData.other_words
+                      .filter(
+                        (word) => !generatedData.shortest_words.includes(word)
+                      )
+                      .map((word, index) => (
+                        <div key={index}>{word}</div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p>
+                No words can be generated from the given grammar.
+                <br /> Please write a terminating rule!
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="generationSteps">
         <p>Rules applied:</p>
         {generationSteps &&
-          generationSteps.map((step, index) => (
-            <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
-          ))}
+          generationSteps
+            .slice()
+            .reverse()
+            .map((step, index) => (
+              <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
+            ))}
       </div>
 
       <div className="lang">

@@ -132,7 +132,7 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
             applied_rules = "; ".join(derivation_history)
             # Inside the backend function where generation steps are constructed
             generation_steps.append(f"<span class='words'>{applied_rules};</span> <span class='word-generated'>word generated: {current_string}</span>")
-
+            # generation_steps.reverse() 
             return
 
         # Check if the current length exceeds the maximum allowed length
@@ -253,7 +253,7 @@ def process_text():
 
     # Generate the language and find the shortest words
     # max_length = 500  # This is the maximum length of the words we are printing from the language, for some reason it goes up till half of this
-    language, shortest_words, other_words_or_error_message, _ = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length = 30)
+    language, shortest_words, other_words_or_error_message, _ = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length = 32)
     # Sort the language set by word length
     sorted_language = sorted(list(language), key=len)
 
