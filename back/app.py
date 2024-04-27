@@ -88,69 +88,6 @@ def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, ru
     return language, shortest_words, other_words, ''
 
 # words with rules
-
-'''def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length):
-    # Convert symbols to sets for faster lookup
-    terminal_symbols = set(terminal_symbols)
-    nonterminal_symbols = set(nonterminal_symbols)
-
-    # Create a dictionary to represent the grammar
-    grammar = {}
-    for rule in rules:
-        if "-" in rule:
-            lhs, rhs = rule.split("-")
-            lhs = lhs.strip()
-            rhs = rhs.strip()
-            if lhs in grammar:
-                grammar[lhs].append(rhs)
-            else:
-                grammar[lhs] = [rhs]
-        else:
-            print(f"Skipping malformed rule: {rule}")
-
-    # Check if grammar has terminals 
-    terminates = False
-    for lhs, rhss in grammar.items():
-        for rhs in rhss:
-            if all(symbol in terminal_symbols for symbol in rhs):
-                terminates = True
-                break
-
-    # If no rule terminates, return an error message
-    if not terminates:
-        return {}, []
-
-    # Initialize word tracking dictionary and generation steps list
-    words_with_rules = {}
-    generation_steps = {}
-
-    # Helper function to generate words with their derivation histories
-    def generate_words_with_rules(current_string, current_length, derivation_history):
-        # Check if the current string consists of only terminal symbols
-        if all(symbol in terminal_symbols for symbol in current_string):
-            words_with_rules[current_string] = derivation_history.copy()
-            generation_steps[current_string] = derivation_history.copy()  # Store the derivation history for the current word
-            return
-
-        # Check if the current length exceeds the maximum allowed length
-        if current_length >= max_length:
-            return
-
-        # Check if the current string ends with a non-terminal symbol
-        last_symbol = current_string[-1] if current_string else starting_symbol
-        if last_symbol in nonterminal_symbols:
-            for rhs in grammar.get(last_symbol, []):
-                new_derivation_history = derivation_history.copy()
-                new_derivation_history.append(f"{last_symbol} → {rhs}")
-                generate_words_with_rules(current_string[:-1] + rhs, current_length + len(rhs), new_derivation_history)
-
-    # Start generating words with an empty derivation history
-    generate_words_with_rules(starting_symbol, len(starting_symbol), [])
-
-    # Return the dictionary of words with their rules and the generation steps
-    return words_with_rules, list(generation_steps.values())
-'''
-
 def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length):
     # Convert symbols to sets for faster lookup
     terminal_symbols = set(terminal_symbols)

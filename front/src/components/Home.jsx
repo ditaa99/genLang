@@ -197,18 +197,6 @@ const Home = () => {
             <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
           ))}
       </div>
-      {/* <div className="generationSteps">
-        <p>Rules applied:</p>
-        {generationSteps &&
-          generationSteps.map((step, index) => (
-            <div key={index}>
-              <span>{step.applied_rules}</span>
-              <span className="test">
-                word generated: {step.word_generated}
-              </span>
-            </div>
-          ))}
-      </div> */}
 
       <div className="lang">
         <h3>Generated Language:</h3>
