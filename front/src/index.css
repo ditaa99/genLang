@@ -179,3 +179,8 @@ textarea {
 .words{
   color: #555;
 }
+
+.word-generated{
+  color: #10194e;
+  font-style: italic;
+}
