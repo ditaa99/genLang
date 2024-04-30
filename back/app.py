@@ -203,38 +203,6 @@ def detect_pattern(words):
     # If no clear pattern is detected, return an empty list
     return patterns
 
-
-'''def detect_pattern(words):
-    if not words:
-        return []
-
-    # Find the set of unique symbols
-    symbols = set(''.join(words))
-
-    patterns = []
-
-    sorted_symbols = sorted(symbols)
-    symbol_counts = [0] * len(sorted_symbols)
-    for word in words:
-        for i, symbol in enumerate(sorted_symbols):
-            if symbol in word:
-                symbol_counts[i] += 1
-
-    pattern_parts = []
-    exponent_letters = ['n', 'm', 'j', 'k', 'l'] # Use different letters for exponents
-    for symbol, count in zip(sorted_symbols, symbol_counts):
-        if count == 1:
-            pattern_parts.append(f"{symbol}")
-        if count > 1:
-            exponent_letter = exponent_letters.pop(0)
-        pattern_parts.append(f"{symbol}^{exponent_letter}")
-
-    if pattern_parts:
-        patterns.append(''.join(pattern_parts))
-
-    return patterns
-'''
-
 # PATTERN
 def disp_lang(pattern):
     # Provides a displayable representation of the language pattern.
