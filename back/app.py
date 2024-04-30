@@ -130,6 +130,7 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
             words_with_rules[current_string] = derivation_history.copy()
             # Construct the string representing applied rules and generated word
             applied_rules = "; ".join(derivation_history)
+            print(f"{applied_rules} word generated: {current_string}")
             # Inside the backend function where generation steps are constructed
             generation_steps.append(f"<span class='words'>{applied_rules};</span> <span class='word-generated'>word generated: {current_string}</span>")
             # generation_steps.reverse() 
@@ -149,7 +150,7 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
 
     # Start generating words with an empty derivation history
     generate_words_with_rules(starting_symbol, len(starting_symbol), [])
-
+    generation_steps.sort(key=len)
     # Return the dictionary of words with their rules and the generation steps
     return words_with_rules, generation_steps
 

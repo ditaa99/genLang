@@ -245,12 +245,9 @@ const Home = () => {
       <div className="generationSteps">
         <p>Rules applied:</p>
         {generationSteps &&
-          generationSteps
-            .slice()
-            .reverse()
-            .map((step, index) => (
-              <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
-            ))}
+          generationSteps.map((step, index) => (
+            <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
+          ))}
       </div>
 
       <div className="lang">
@@ -271,6 +268,25 @@ const Home = () => {
                 L(G) = &#123; {generatedData.shortest_words[0]} &#125;
               </p>
             )}
+
+            {/*             {Array.isArray(generatedData.language_representation) ? (
+              generatedData.language_representation.map((pattern, index) => (
+                <p key={index} className="language">
+                  L(G) = &#123;{" "}
+                  {pattern
+                    .split("^")
+                    .map((part, i) =>
+                      i === 1 ? <sup key={i}>{part}</sup> : part
+                    )}{" "}
+                  &#125;
+                </p>
+              ))
+            ) : (
+              // If language_representation is not an array, display it directly
+              <p className="language">
+                L(G) = &#123; {generatedData.shortest_words[0]} &#125;
+              </p>
+            )} */}
           </div>
         )}
       </div>
