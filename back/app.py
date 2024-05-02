@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_cors import cross_origin
 from itertools import permutations
 import re
-
+import os
 
 app = Flask(__name__)
 cors = CORS(app) 
@@ -130,7 +130,7 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
             words_with_rules[current_string] = derivation_history.copy()
             # Construct the string representing applied rules and generated word
             applied_rules = "; ".join(derivation_history)
-            print(f"{applied_rules} word generated: {current_string}")
+            # print(f"{applied_rules} word generated: {current_string}")
             # Inside the backend function where generation steps are constructed
             generation_steps.append(f"<span class='words'>{applied_rules};</span> <span class='word-generated'>word generated: {current_string}</span>")
             # generation_steps.reverse() 
@@ -154,54 +154,99 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
     # Return the dictionary of words with their rules and the generation steps
     return words_with_rules, generation_steps
 
+#PATTERN
+def detect_pattern(words):
+    if not words:
+        return "No language was generated"
 
-# PATTERN
+    # Check if all words are made of the same character
+    first_char = words[0][0]
+    if all(word == first_char * len(word) for word in words):
+        # Check if lengths of words are consecutive numbers
+        lengths = [len(word) for word in words]
+        if sorted(lengths) == list(range(min(lengths), max(lengths) + 1)):
+            print (f"{first_char}^n")
+            return f"{first_char}^n"
+
+    # Detect all symbols used in the language
+    symbols = set(''.join(words))
+
+    # Single symbol repeated across all words
+    if len(symbols) == 1:
+        symbol = next(iter(symbols))
+        counts = [word.count(symbol) for word in words]
+        if all(count > 6 for count in counts):
+            return f"{symbol}^n"
+        return f"{symbol}" * counts[0]  # All words will be the same in this case
+
+    # Prepare to analyze multiple symbols
+    exponent_letters = ['n', 'm', 'j', 'k', 'l']
+    patterns = []
+
+    # Check if all words follow the pattern a^n b^n
+    a_counts = [word.count('a') for word in words]
+    b_counts = [word.count('b') for word in words]
+    if all(a_count <= 1 and b_count > 6 for a_count, b_count in zip(a_counts, b_counts)):
+        patterns.append('a')
+        patterns.append(f"b^{exponent_letters.pop(0)}")
+        print(' '.join(patterns))
+        return ' '.join(patterns)
+
+    # Check if all words follow the pattern b^n a^n
+    b_counts = [word.count('b') for word in words]
+    a_counts = [word.count('a') for word in words]
+    if all(b_count <= 6 and a_count > 6 for b_count, a_count in zip(b_counts, a_counts)):
+        patterns.append(f"b^{exponent_letters.pop(0)}")
+        patterns.append(f"a^{exponent_letters.pop(0)}")
+        print(' '.join(patterns))
+        return ' '.join(patterns)
+
+    # Analyze patterns by checking all words start with the same repeating unit
+    common_start = find_repeating_unit(words[0])
+    if common_start and all(word.startswith(common_start) for word in words):
+        repeat_count = len(common_start)
+        if repeat_count > 6:
+            patterns.append(f"{common_start[0]}^n")
+        else:
+            patterns.append(common_start)
+
+        # Remove the common part and recurse on the rest
+        remaining_parts = [word[len(common_start):] for word in words if len(word) > len(common_start)]
+        if remaining_parts:
+            next_pattern = detect_pattern(remaining_parts)
+            patterns.append(next_pattern)
+
+    # If patterns are complex and involve different starts
+    else:
+        pattern_parts = []
+        for symbol in sorted(symbols):  # Sort symbols for consistent pattern representation
+            counts = [word.count(symbol) for word in words]
+            max_count = max(counts)
+            if max_count > 6:
+                if exponent_letters:
+                    pattern_parts.append(f"{symbol}^{exponent_letters.pop(0)}")
+                else:
+                    pattern_parts.append(f"{symbol}^n")
+            elif max_count > 0:
+                pattern_parts.append(f"{symbol}" * max_count)
+
+        if pattern_parts:
+            patterns.extend(pattern_parts)
+
+
+    if patterns:
+        print(' '.join(patterns))
+        return ' '.join(patterns)
+    else:
+        return "No clear pattern detected"
+
 def find_repeating_unit(word):
     # Tries to find the largest repeating unit at the start of the word.
     for i in range(1, len(word) // 2 + 1):  # Check different unit lengths
         unit = word[:i]
-        if word.startswith(unit * (len(word) // i)):
+        if word.startswith(unit * (len(word) // len(unit))):
             return unit
     return None
-
-# PATTERN
-def detect_pattern(words):
-    # print(words)
-    if not words:
-        return []
-
-    # Find the set of unique symbols
-    symbols = set(''.join(words))
-
-    patterns = []
-
-    # Check if the language consists of only one symbol
-    if len(symbols) == 1:
-        patterns.append(f"{symbols.pop()}^n")
-
-    # Check if the language consists of multiple symbols with one being a prefix of the other
-    else:
-        sorted_symbols = sorted(symbols)
-        symbol_counts = [0] * len(sorted_symbols)
-        # symbol_counts = [1] * len(sorted_symbols)
-        for word in words:
-            for i, symbol in enumerate(sorted_symbols):
-                if word.startswith(symbol):
-                    symbol_counts[i] += 1
-                    break
-
-        pattern_parts = []
-        exponent_letters = ['n', 'm', 'j', 'k', 'l']  # Use different letters for exponents
-        for symbol, count in zip(sorted_symbols, symbol_counts):
-            if count >= 0:
-                exponent_letter = exponent_letters.pop(0)
-                pattern_parts.append(f"{symbol}^{exponent_letter}")
-
-        if pattern_parts:
-            patterns.append(''.join(pattern_parts))
-
-    # If no clear pattern is detected, return an empty list
-    return patterns
 
 # PATTERN
 def disp_lang(pattern):
@@ -261,7 +306,8 @@ def process_text():
             'shortest_words': shortest_words,
             'other_words': other_words_or_error_message,
             # 'language_representation': disp_lang(pattern),
-            'language_representation': detected_pattern if detected_pattern else 'No clear pattern detected',
+            'language_representation': detected_pattern,
+            # 'language_representation': detected_pattern if detected_pattern else 'No clear pattern detected',
             'words_with_rules': words_and_rules,
             'generationSteps': generation_steps
     }

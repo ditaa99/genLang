@@ -142,53 +142,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div className="solution">
-        <button
-          type="button"
-          value="Generate"
-          className="btn"
-          onClick={handleGenerateClick}
-        >
-          Generate
-        </button>
-        {generatedData && (
-          <div>
-            {generatedData.language && generatedData.language.length > 0 ? (
-              <div>
-                {generatedData.shortest_words &&
-                  generatedData.shortest_words.length > 0 && (
-                    <p>
-                      Shortest word(s):{" "}
-                      {generatedData.shortest_words.join(", ")}
-                    </p>
-                  )}
-
-                {generatedData.other_words &&
-                generatedData.other_words.length > 0 &&
-                generatedData.other_words[0] ===
-                  "This language only has one word." ? (
-                  <p>
-                    This language only has one word:{" "}
-                    {generatedData.shortest_words[0]}
-                  </p>
-                ) : (
-                  <div className="words">
-                    Other words:
-                    {generatedData.other_words.map((word, index) => (
-                      <div key={index}>{word}</div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <p>
-                No words can be generated from the given grammar.
-                <br /> Please write a terminating rule!
-              </p>
-            )}
-          </div>
-        )}
-      </div> */}
       <div className="solution">
         <button
           type="button"
@@ -251,45 +204,29 @@ const Home = () => {
       </div>
 
       <div className="lang">
-        <h3>Generated Language:</h3>
+  <h3>Generated Language:</h3>
+  {generatedData && (
+    <div>
+      {/* Check if there's a clear pattern or a special message */}
+      {generatedData.language_representation ? (
+        <p className="language">
+          L(G) = &#123; {generatedData.language_representation} &#125;
+        </p>
+      ) : generatedData.shortest_words.length === 1 && !generatedData.other_words.length ? (
+        // Check if there's only one word in the language
+        <p className="language">
+          L(G) = &#123; {generatedData.shortest_words[0]} &#125; (This language only has one word.)
+        </p>
+      ) : (
+        // Fallback if no pattern detected and more than one word exists
+        <p className="language">
+          No clear pattern detected or multiple words generated without a concise pattern.
+        </p>
+      )}
+    </div>
+  )}
+</div>
 
-        {generatedData && generatedData.language_representation && (
-          <div>
-            {/* Check if language_representation is an array */}
-            {Array.isArray(generatedData.language_representation) ? (
-              generatedData.language_representation.map((pattern, index) => (
-                <p key={index} className="language">
-                  L(G) = &#123; {pattern} &#125;
-                </p>
-              ))
-            ) : (
-              // If language_representation is not an array, display it directly
-              <p className="language">
-                L(G) = &#123; {generatedData.shortest_words[0]} &#125;
-              </p>
-            )}
-
-            {/*             {Array.isArray(generatedData.language_representation) ? (
-              generatedData.language_representation.map((pattern, index) => (
-                <p key={index} className="language">
-                  L(G) = &#123;{" "}
-                  {pattern
-                    .split("^")
-                    .map((part, i) =>
-                      i === 1 ? <sup key={i}>{part}</sup> : part
-                    )}{" "}
-                  &#125;
-                </p>
-              ))
-            ) : (
-              // If language_representation is not an array, display it directly
-              <p className="language">
-                L(G) = &#123; {generatedData.shortest_words[0]} &#125;
-              </p>
-            )} */}
-          </div>
-        )}
-      </div>
     </div>
   );
 };
