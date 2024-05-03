@@ -204,29 +204,43 @@ const Home = () => {
       </div>
 
       <div className="lang">
-  <h3>Generated Language:</h3>
-  {generatedData && (
-    <div>
-      {/* Check if there's a clear pattern or a special message */}
-      {generatedData.language_representation ? (
-        <p className="language">
-          L(G) = &#123; {generatedData.language_representation} &#125;
-        </p>
-      ) : generatedData.shortest_words.length === 1 && !generatedData.other_words.length ? (
-        // Check if there's only one word in the language
-        <p className="language">
-          L(G) = &#123; {generatedData.shortest_words[0]} &#125; (This language only has one word.)
-        </p>
-      ) : (
-        // Fallback if no pattern detected and more than one word exists
-        <p className="language">
-          No clear pattern detected or multiple words generated without a concise pattern.
-        </p>
-      )}
-    </div>
-  )}
-</div>
+        <h3>Generated Language:</h3>
+        {generatedData && (
+          <div>
+            {generatedData.language_representation ? (
+              <p
+                className="language"
+                dangerouslySetInnerHTML={{
+                  __html: `L(G) = {${generatedData.language_representation.replace(
+                    /\^(\w+)/g,
+                    "<sup>$1</sup>"
+                  )}}`,
+                }}
+              ></p>
+            ) : generatedData.shortest_words.length === 1 &&
+              !generatedData.other_words.length ? (
+              <p
+                className="language"
+                dangerouslySetInnerHTML={{
+                  __html: `L(G) = {${generatedData.shortest_words[0].replace(
+                    /\^(\w+)/g,
+                    "<sup>$1</sup>"
+                  )} (This language only has one word.)`,
+                }}
+              ></p>
+            ) : (
+              <p className="language">
+                No clear pattern detected or multiple words generated without a
+                concise pattern.
+              </p>
+            )}
 
+              Please double check the words to make sure of the pattern. I am
+              still learning.
+
+          </div>
+        )}
+      </div>
     </div>
   );
 };
