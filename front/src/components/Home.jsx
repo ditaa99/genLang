@@ -142,53 +142,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div className="solution">
-        <button
-          type="button"
-          value="Generate"
-          className="btn"
-          onClick={handleGenerateClick}
-        >
-          Generate
-        </button>
-        {generatedData && (
-          <div>
-            {generatedData.language && generatedData.language.length > 0 ? (
-              <div>
-                {generatedData.shortest_words &&
-                  generatedData.shortest_words.length > 0 && (
-                    <p>
-                      Shortest word(s):{" "}
-                      {generatedData.shortest_words.join(", ")}
-                    </p>
-                  )}
-
-                {generatedData.other_words &&
-                generatedData.other_words.length > 0 &&
-                generatedData.other_words[0] ===
-                  "This language only has one word." ? (
-                  <p>
-                    This language only has one word:{" "}
-                    {generatedData.shortest_words[0]}
-                  </p>
-                ) : (
-                  <div className="words">
-                    Other words:
-                    {generatedData.other_words.map((word, index) => (
-                      <div key={index}>{word}</div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <p>
-                No words can be generated from the given grammar.
-                <br /> Please write a terminating rule!
-              </p>
-            )}
-          </div>
-        )}
-      </div> */}
       <div className="solution">
         <button
           type="button"
@@ -245,32 +198,46 @@ const Home = () => {
       <div className="generationSteps">
         <p>Rules applied:</p>
         {generationSteps &&
-          generationSteps
-            .slice()
-            .reverse()
-            .map((step, index) => (
-              <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
-            ))}
+          generationSteps.map((step, index) => (
+            <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
+          ))}
       </div>
 
       <div className="lang">
         <h3>Generated Language:</h3>
-
-        {generatedData && generatedData.language_representation && (
+        {generatedData && (
           <div>
-            {/* Check if language_representation is an array */}
-            {Array.isArray(generatedData.language_representation) ? (
-              generatedData.language_representation.map((pattern, index) => (
-                <p key={index} className="language">
-                  L(G) = &#123; {pattern} &#125;
-                </p>
-              ))
+            {generatedData.language_representation ? (
+              <p
+                className="language"
+                dangerouslySetInnerHTML={{
+                  __html: `L(G) = {${generatedData.language_representation.replace(
+                    /\^(\w+)/g,
+                    "<sup>$1</sup>"
+                  )}}`,
+                }}
+              ></p>
+            ) : generatedData.shortest_words.length === 1 &&
+              !generatedData.other_words.length ? (
+              <p
+                className="language"
+                dangerouslySetInnerHTML={{
+                  __html: `L(G) = {${generatedData.shortest_words[0].replace(
+                    /\^(\w+)/g,
+                    "<sup>$1</sup>"
+                  )} (This language only has one word.)`,
+                }}
+              ></p>
             ) : (
-              // If language_representation is not an array, display it directly
               <p className="language">
-                L(G) = &#123; {generatedData.shortest_words[0]} &#125;
+                No clear pattern detected or multiple words generated without a
+                concise pattern.
               </p>
             )}
+
+              Please double check the words to make sure of the pattern. I am
+              still learning.
+
           </div>
         )}
       </div>

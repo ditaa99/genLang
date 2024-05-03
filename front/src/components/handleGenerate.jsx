@@ -43,7 +43,7 @@ const handleGenerate = async (
   setRulesDuplicateWarning
 ) => {
   // Convert rules from objects to strings for validation
-  const ruleStrings = rules.map((rule) => rule.value);
+  const ruleStrings = rules.map((rule) => rule.value.trim());
 
   // Rule validation
   const rulesError = validateRulesForDuplicates(rules);
@@ -222,12 +222,15 @@ const handleGenerate = async (
       // Server responded with an error
       console.error("Server Error:", error.response.data);
       console.error("Server Error Status:", error.response.status);
+      setGeneratedData(null);
     } else if (error.request) {
       // Request was made but no response received
       console.error("Network Error:", error.request);
+      setGeneratedData(null);
     } else {
       // Something else happened while setting up the request
       console.error("Error:", error.message);
+      setGeneratedData(null);
     }
   }
 };
