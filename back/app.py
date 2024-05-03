@@ -168,12 +168,18 @@ def detect_pattern(words):
             print (f"{first_char}^n")
             return f"{first_char}^n"
 
-    # Detect all symbols used in the language
-    symbols = set(''.join(words))
+    # Detect all symbols used in the language and maintain order of appearance
+    symbols = []
+    observed_symbols = set()
+    for word in words:
+        for char in word:
+            if char not in observed_symbols:
+                observed_symbols.add(char)
+                symbols.append(char)
 
     # Single symbol repeated across all words
     if len(symbols) == 1:
-        symbol = next(iter(symbols))
+        symbol = symbols[0]
         counts = [word.count(symbol) for word in words]
         if all(count > 6 for count in counts):
             return f"{symbol}^n"
@@ -219,7 +225,7 @@ def detect_pattern(words):
     # If patterns are complex and involve different starts
     else:
         pattern_parts = []
-        for symbol in sorted(symbols):  # Sort symbols for consistent pattern representation
+        for symbol in symbols:  # Using order of appearance for consistent pattern representation
             counts = [word.count(symbol) for word in words]
             max_count = max(counts)
             if max_count > 6:
