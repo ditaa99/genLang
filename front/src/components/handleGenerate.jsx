@@ -1,6 +1,7 @@
 import axios from "axios";
 axios.defaults.headers.post["Access-Control-Allow-Origin"] =
-  "http://localhost:5173";
+  // "http://localhost:5173"
+  "https://formallanguages.fly.dev/";
 
 // Validation functions
 const validateTerminalSymbols = (symbols) => {
@@ -207,7 +208,8 @@ const handleGenerate = async (
 
   try {
     const response = await axios.post(
-      "http://localhost:5000/fetchData",
+      // "http://localhost:5000/fetchData",
+      "https://formallanguages.fly.dev/fetchData", 
       requestData
     );
     console.log("Response from backend:", response); // Inspect the response

@@ -261,7 +261,7 @@ def disp_lang(pattern):
 
 
 @app.route('/fetchData', methods=['POST'])
-@cross_origin(origin='http://localhost:5173')
+# @cross_origin(origin='http://localhost:5173')
 def process_text():
     data = request.get_json()
 
