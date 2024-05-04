@@ -74,7 +74,7 @@ const Home = () => {
               <textarea
                 rows="1"
                 cols="5"
-                placeholder="Enter terminal symbol(s) here"
+                placeholder="0,1,a,b,c"
                 value={terminalSymbols}
                 onChange={(e) => setTerminalSymbols(e.target.value)}
               ></textarea>
@@ -86,6 +86,7 @@ const Home = () => {
             {terminalDuplicateWarning && (
               <div className="warning-message">{terminalDuplicateWarning}</div>
             )}
+            
           </div>
           <div className="symbol-row">
             <div className="input-wrapper">
@@ -93,7 +94,7 @@ const Home = () => {
               <textarea
                 rows="1"
                 cols="5"
-                placeholder="Enter nonterminal symbol(s) here"
+                placeholder="S,A,B"
                 value={nonterminalSymbols}
                 onChange={(e) => setNonterminalSymbols(e.target.value)}
               ></textarea>
@@ -118,6 +119,14 @@ const Home = () => {
             </div>{" "}
             <div className="error-message">{startingSymbolError}</div>
           </div>
+          <button
+          type="button"
+          value="Generate"
+          className="btn"
+          onClick={handleGenerateClick}
+        >
+          Generate
+        </button>
         </div>
 
         <div className="rules">
@@ -143,14 +152,7 @@ const Home = () => {
       </div>
 
       <div className="solution">
-        <button
-          type="button"
-          value="Generate"
-          className="btn"
-          onClick={handleGenerateClick}
-        >
-          Generate
-        </button>
+        <p>Words generated:</p>
         {generatedData && (
           <div>
             {generatedData.language && generatedData.language.length > 0 ? (

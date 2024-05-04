@@ -60,23 +60,23 @@ const Info = () => {
         </p>
         <p>
           On your right hand side input your set of rules. <br /> Rules consist
-          of a <b>nonterminal</b> symbol followed by a dash (-) and then a{" "}
-          <b>terminal</b> symbol or <b>terminal nonterminal</b> symbol.
+          of a <b>nonterminal</b> symbol followed by a dash (-) and then either a single{" "}
+          <b>terminal</b> symbol or by both a <b>terminal</b> and a <b> nonterminal</b> symbol.
         </p>
         {/* <p>left handside (left from the dash) one capital (nonterminal symbol only) and the right handside one or two elements (either one terminal only or nonterminal terminal)</p> */}
         <p>
-          • When inputting the rules, make sure to no have space on the right
+          • When inputting the rules, make sure not to have space on the right
           handside
         </p>
         <p>
           The accepted forms of the rules are: <br />
-          • nontermial - terminal
-          <br />• nontermial - terminal nontermial
+          • nonterminal - terminal
+          <br />• nonterminal - terminal nonterminal
         </p>
         <p>
           The non-accepted forms of the rules are: <br />
-          • nontermial - nontermial <br />
-          • nontermial - nontermial terminal <br />
+          • nonterminal - nonterminal <br />
+          • nonterminal - nonterminal terminal <br />
           • terminal - (anything) <br />
         </p>
         <p>
