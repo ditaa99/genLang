@@ -212,7 +212,7 @@ const handleGenerate = async (
       "https://formallanguages.fly.dev/fetchData", 
       requestData
     );
-    console.log("Response from backend:", response); // Inspect the response
+    // console.log("Response from backend:", response); // Inspect the response
     setGeneratedData({
       ...response.data,
       // generationSteps: response.data.generationSteps,

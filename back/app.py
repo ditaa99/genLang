@@ -3,7 +3,6 @@ from flask_cors import CORS
 from flask_cors import cross_origin
 from itertools import permutations
 import re
-import os
 
 app = Flask(__name__)
 cors = CORS(app) 
@@ -39,7 +38,7 @@ def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, ru
 
     # If no rule terminates, return an error message
     if not terminates:
-        return [], [], "You didn't have any terminating rules. This language cannot be generated."
+        return [], [], "You didn't have any valid terminating rules. This language cannot be generated."
 
     # Initialize the language set
     language = set()
