@@ -38,11 +38,7 @@ Rule.propTypes = {
   value: PropTypes.string.isRequired,
   onRemove: PropTypes.func.isRequired,
   onInputChange: PropTypes.func.isRequired,
-  placeholder: PropTypes.string,
-};
-
-Rule.defaultProps = {
-  placeholder: 'S - aS',
+  placeholder: PropTypes.string.isRequired,
 };
 
 export default Rule;

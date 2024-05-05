@@ -24,9 +24,7 @@ const Home = () => {
   const [rulesDuplicateWarning, setRulesDuplicateWarning] = useState(null);
 
   const addRule = () => {
-    if (rules.length === 0 || rules[rules.length - 1].value.trim() !== ''){
     setRules((prevRules) => [...prevRules, { id: uuidv4(), value: "" }]);
-    }
   };
 
   const handleRuleChange = (id, updatedValue) => {
@@ -131,25 +129,26 @@ const Home = () => {
         </div>
 
         <div className="rules">
-          <div className="rules-top">
-            <p className="label">Rules:</p>
-            <button type="button" value="New" className="btn" onClick={addRule}>
-              New Rule
-            </button>
-          </div>
-          {rules.map((rule, index) => (
-            <Rule
-              key={rule.id}
-              id={rule.id}
-              index={index}
-              value={rule.value}
-              onRemove={onRemove}
-              onInputChange={handleRuleChange}
-            />
-          ))}
-          <div className="error-message">{rulesError}</div>
-          {rulesDuplicateWarning && <p>{rulesDuplicateWarning}</p>}
-        </div>
+  <div className="rules-top">
+    <p className="label">Rules:</p>
+    <button type="button" value="New" className="btn" onClick={addRule}>
+      New
+    </button>
+  </div>
+  {rules.map((rule, index) => (
+    <Rule
+      key={rule.id}
+      id={rule.id}
+      index={index}
+      value={rule.value}
+      onRemove={onRemove}
+      onInputChange={handleRuleChange}
+      placeholder="S - aS"
+    />
+  ))}
+  <div className="error-message">{rulesError}</div>
+  {rulesDuplicateWarning && <p>{rulesDuplicateWarning}</p>}
+</div>
       </div>
 
       <div className="solution">
