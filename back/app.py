@@ -156,94 +156,47 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
 #PATTERN
 def detect_pattern(words):
     if not words:
-        return "No language was generated"
+        return ""
 
-    # Check if all words are made of the same character
-    first_char = words[0][0]
-    if all(word == first_char * len(word) for word in words):
-        # Check if lengths of words are consecutive numbers
-        lengths = [len(word) for word in words]
-        if sorted(lengths) == list(range(min(lengths), max(lengths) + 1)):
-            print (f"{first_char}^n")
-            return f"{first_char}^n"
-
-    # Detect all symbols used in the language and maintain order of appearance
-    symbols = []
-    observed_symbols = set()
-    for word in words:
-        for char in word:
-            if char not in observed_symbols:
-                observed_symbols.add(char)
-                symbols.append(char)
-
-    # Single symbol repeated across all words
-    if len(symbols) == 1:
-        symbol = symbols[0]
-        counts = [word.count(symbol) for word in words]
-        if all(count > 6 for count in counts):
-            return f"{symbol}^n"
-        return f"{symbol}" * counts[0]  # All words will be the same in this case
-
-    # Prepare to analyze multiple symbols
     exponent_letters = ['n', 'm', 'j', 'k', 'l']
-    patterns = []
+    exponent_index = 0  # index to track the current exponent letter
 
-    # Check if all words follow the pattern a^n b^n
-    a_counts = [word.count('a') for word in words]
-    b_counts = [word.count('b') for word in words]
-    if all(a_count <= 1 and b_count > 6 for a_count, b_count in zip(a_counts, b_counts)):
-        patterns.append('a')
-        patterns.append(f"b^{exponent_letters.pop(0)}")
-        print(' '.join(patterns))
-        return ' '.join(patterns)
-
-    # Check if all words follow the pattern b^n a^n
-    b_counts = [word.count('b') for word in words]
-    a_counts = [word.count('a') for word in words]
-    if all(b_count <= 6 and a_count > 6 for b_count, a_count in zip(b_counts, a_counts)):
-        patterns.append(f"b^{exponent_letters.pop(0)}")
-        patterns.append(f"a^{exponent_letters.pop(0)}")
-        print(' '.join(patterns))
-        return ' '.join(patterns)
-
-    # Analyze patterns by checking all words start with the same repeating unit
-    common_start = find_repeating_unit(words[0])
-    if common_start and all(word.startswith(common_start) for word in words):
-        repeat_count = len(common_start)
-        if repeat_count > 6:
-            patterns.append(f"{common_start[0]}^n")
-        else:
-            patterns.append(common_start)
-
-        # Remove the common part and recurse on the rest
-        remaining_parts = [word[len(common_start):] for word in words if len(word) > len(common_start)]
-        if remaining_parts:
-            next_pattern = detect_pattern(remaining_parts)
-            patterns.append(next_pattern)
-
-    # If patterns are complex and involve different starts
-    else:
+    def find_word_pattern(word):
+        nonlocal exponent_index
         pattern_parts = []
-        for symbol in symbols:  # Using order of appearance for consistent pattern representation
-            counts = [word.count(symbol) for word in words]
-            max_count = max(counts)
-            if max_count > 6:
-                if exponent_letters:
-                    pattern_parts.append(f"{symbol}^{exponent_letters.pop(0)}")
+        count = 1
+        length = len(word)
+
+        for i in range(1, length):
+            if word[i] == word[i-1]:
+                count += 1
+            else:
+                if count > 1:
+                    # Use and increment the current exponent index
+                    pattern_parts.append(f"{word[i-1]}^{exponent_letters[exponent_index]}")
+                    exponent_index = (exponent_index + 1) % len(exponent_letters)
                 else:
-                    pattern_parts.append(f"{symbol}^n")
-            elif max_count > 0:
-                pattern_parts.append(f"{symbol}" * max_count)
+                    pattern_parts.append(word[i-1])
+                count = 1
 
-        if pattern_parts:
-            patterns.extend(pattern_parts)
+        if count > 1:
+            # Use and increment the current exponent index
+            pattern_parts.append(f"{word[-1]}^{exponent_letters[exponent_index]}")
+            exponent_index = (exponent_index + 1) % len(exponent_letters)
+        else:
+            pattern_parts.append(word[-1])
 
+        return ''.join(pattern_parts)
 
-    if patterns:
-        print(' '.join(patterns))
-        return ' '.join(patterns)
-    else:
-        return "No clear pattern detected"
+    # Find patterns for all words and return the longest one
+    longest_pattern = ""
+    for word in words:
+        exponent_index = 0  # Reset the exponent index for each new word
+        pattern = find_word_pattern(word)
+        if len(pattern) > len(longest_pattern):
+            longest_pattern = pattern
+    print(longest_pattern)
+    return longest_pattern
 
 def find_repeating_unit(word):
     # Tries to find the largest repeating unit at the start of the word.
