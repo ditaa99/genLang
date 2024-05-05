@@ -2,6 +2,9 @@
 
 This project is an educational software focused on formal languages and automata theory. It aims to assist students in understanding the process of generating a formal language from a given grammar.
 
+## Deployed Version
+The project is deployed and can be accessed here: https://formallanguages-a8aa1.web.app/
+
 ## Table of Contents
 
 - [Description](#description)
