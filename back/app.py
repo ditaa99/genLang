@@ -19,8 +19,8 @@ def generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, ru
     for rule in rules:
         if "-" in rule:
             lhs, rhs = rule.split("-")
-            lhs = lhs.strip()  # Remove any leading/trailing whitespace
-            rhs = rhs.strip()  # Remove any leading/trailing whitespace
+            lhs = lhs.strip() 
+            rhs = rhs.strip()  
             if lhs in grammar:
                 grammar[lhs].append(rhs)
             else:
@@ -114,11 +114,9 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
                 terminates = True
                 break
 
-    # If no rule terminates, return an empty dictionary
     if not terminates:
         return {}, []
 
-    # Initialize word tracking dictionary and generation steps list
     words_with_rules = {}
     generation_steps = []
 
@@ -129,7 +127,6 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
             words_with_rules[current_string] = derivation_history.copy()
             # Construct the string representing applied rules and generated word
             applied_rules = "; ".join(derivation_history)
-            # print(f"{applied_rules} word generated: {current_string}")
             # Inside the backend function where generation steps are constructed
             generation_steps.append(f"<span class='words'>{applied_rules};</span> <span class='word-generated'>word generated: {current_string}</span>")
             # generation_steps.reverse() 
@@ -150,7 +147,6 @@ def words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, m
     # Start generating words with an empty derivation history
     generate_words_with_rules(starting_symbol, len(starting_symbol), [])
     generation_steps.sort(key=len)
-    # Return the dictionary of words with their rules and the generation steps
     return words_with_rules, generation_steps
 
 #PATTERN
@@ -197,7 +193,6 @@ def detect_pattern(words):
         print(' '.join(patterns))
         return ' '.join(patterns)
 
-    # Check if all words follow the pattern b^n a^n
     b_counts = [word.count('b') for word in words]
     a_counts = [word.count('a') for word in words]
     if all(b_count <= 6 and a_count > 6 for b_count, a_count in zip(b_counts, a_counts)):
@@ -244,10 +239,9 @@ def detect_pattern(words):
         return ' '.join(patterns)
     else:
         return "No clear pattern detected"
-
+# PATTERN
 def find_repeating_unit(word):
-    # Tries to find the largest repeating unit at the start of the word.
-    for i in range(1, len(word) // 2 + 1):  # Check different unit lengths
+    for i in range(1, len(word) // 2 + 1): 
         unit = word[:i]
         if word.startswith(unit * (len(word) // len(unit))):
             return unit
@@ -255,12 +249,10 @@ def find_repeating_unit(word):
 
 # PATTERN
 def disp_lang(pattern):
-    # Provides a displayable representation of the language pattern.
     return pattern if pattern else "No clear pattern detected"
 
 
 @app.route('/fetchData', methods=['POST'])
-# @cross_origin(origin='http://localhost:5173')
 def process_text():
     data = request.get_json()
 
@@ -271,9 +263,7 @@ def process_text():
     rules = data.get('rules')
 
     # Generate the language and find the shortest words
-    # max_length = 500  # This is the maximum length of the words we are printing from the language, for some reason it goes up till half of this
     language, shortest_words, other_words_or_error_message, _ = generate_language(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length = 32)
-    # Sort the language set by word length
     sorted_language = sorted(list(language), key=len)
 
     # Find the length of the shortest words
@@ -282,13 +272,11 @@ def process_text():
     # Split the sorted list into shortest words and other words
     shortest_words = [word for word in sorted_language if len(word) == shortest_word_length]
     other_words = [word for word in sorted_language if len(word) > shortest_word_length]
+    
     words_and_rules, generation_steps = words_rules(terminal_symbols, nonterminal_symbols, starting_symbol, rules, max_length=30)
-
     
     # Detect the pattern
     detected_pattern = detect_pattern(other_words)
-    # detected_pattern = detect_pattern(other_words, other_words)
-
 
     if isinstance(other_words_or_error_message, str):
         # It's an error message
@@ -298,7 +286,6 @@ def process_text():
             'starting_symbol': starting_symbol,
             'rules': rules,
             'errorMessage': other_words_or_error_message,
-            # 'errorMessageRules' : error_message_rules
         }
     else:
         # It's a list of other words
@@ -310,9 +297,7 @@ def process_text():
             'language': list(language),
             'shortest_words': shortest_words,
             'other_words': other_words_or_error_message,
-            # 'language_representation': disp_lang(pattern),
             'language_representation': detected_pattern,
-            # 'language_representation': detected_pattern if detected_pattern else 'No clear pattern detected',
             'words_with_rules': words_and_rules,
             'generationSteps': generation_steps
     }
