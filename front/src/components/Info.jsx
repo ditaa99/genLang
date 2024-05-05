@@ -59,7 +59,7 @@ const Info = () => {
           space.
         </p>
         <p>
-          On your right hand side input your set of rules. <br /> Rules consist
+        You can input your desired set of rules on the right handside. <br /> Rules consist
           of a <b>nonterminal</b> symbol followed by a dash (-) and then either a single{" "}
           <b>terminal</b> symbol or by both a <b>terminal</b> and a <b> nonterminal</b> symbol.
         </p>

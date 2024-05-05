@@ -86,7 +86,6 @@ const Home = () => {
             {terminalDuplicateWarning && (
               <div className="warning-message">{terminalDuplicateWarning}</div>
             )}
-            
           </div>
           <div className="symbol-row">
             <div className="input-wrapper">
@@ -120,13 +119,13 @@ const Home = () => {
             <div className="error-message">{startingSymbolError}</div>
           </div>
           <button
-          type="button"
-          value="Generate"
-          className="btn"
-          onClick={handleGenerateClick}
-        >
-          Generate
-        </button>
+            type="button"
+            value="Generate"
+            className="btn"
+            onClick={handleGenerateClick}
+          >
+            Generate
+          </button>
         </div>
 
         <div className="rules">
@@ -152,7 +151,9 @@ const Home = () => {
       </div>
 
       <div className="solution">
-        <p>Words generated:</p>
+        <p>
+          <b>Generated words:</b>
+        </p>
         {generatedData && (
           <div>
             {generatedData.language && generatedData.language.length > 0 ? (
@@ -198,7 +199,9 @@ const Home = () => {
       </div>
 
       <div className="generationSteps">
-        <p>Rules applied:</p>
+        <p>
+          <b>Rules applied:</b>
+        </p>
         {generationSteps &&
           generationSteps.map((step, index) => (
             <div key={index} dangerouslySetInnerHTML={{ __html: step }} />
@@ -236,10 +239,8 @@ const Home = () => {
                 concise pattern.
               </p>
             )}
-
-              Please double check the words to make sure of the pattern. I am
-              still learning.
-
+            Please double check the words to make sure of the pattern. I am
+            still learning.
           </div>
         )}
       </div>
