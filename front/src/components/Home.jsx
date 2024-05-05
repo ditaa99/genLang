@@ -9,7 +9,7 @@ const Home = () => {
   const [terminalSymbols, setTerminalSymbols] = useState("");
   const [nonterminalSymbols, setNonterminalSymbols] = useState("");
   const [startingSymbol, setStartingSymbol] = useState("");
-  const [rules, setRules] = useState([]);
+  const [rules, setRules] = useState([{id: uuidv4(), value: ""}]);
   const [terminalSymbolsError, setTerminalSymbolsError] = useState(null);
   const [nonterminalSymbolsError, setNonterminalSymbolsError] = useState(null);
   const [startingSymbolError, setStartingSymbolError] = useState(null);
@@ -24,7 +24,9 @@ const Home = () => {
   const [rulesDuplicateWarning, setRulesDuplicateWarning] = useState(null);
 
   const addRule = () => {
+    if (rules.length === 0 || rules[rules.length - 1].value.trim() !== ''){
     setRules((prevRules) => [...prevRules, { id: uuidv4(), value: "" }]);
+    }
   };
 
   const handleRuleChange = (id, updatedValue) => {
@@ -132,7 +134,7 @@ const Home = () => {
           <div className="rules-top">
             <p className="label">Rules:</p>
             <button type="button" value="New" className="btn" onClick={addRule}>
-              New
+              New Rule
             </button>
           </div>
           {rules.map((rule, index) => (

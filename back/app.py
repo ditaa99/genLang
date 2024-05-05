@@ -1,8 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_cors import cross_origin
-from itertools import permutations
-import re
 
 app = Flask(__name__)
 cors = CORS(app) 
@@ -178,7 +176,7 @@ def detect_pattern(words):
         counts = [word.count(symbol) for word in words]
         if all(count > 6 for count in counts):
             return f"{symbol}^n"
-        return f"{symbol}" * counts[0]  # All words will be the same in this case
+        return f"{symbol}" * counts[0] 
 
     # Prepare to analyze multiple symbols
     exponent_letters = ['n', 'm', 'j', 'k', 'l']
@@ -279,7 +277,6 @@ def process_text():
     detected_pattern = detect_pattern(other_words)
 
     if isinstance(other_words_or_error_message, str):
-        # It's an error message
         response_data = {
             'terminal_symbols': terminal_symbols,
             'nonterminal_symbols': nonterminal_symbols,
@@ -288,7 +285,6 @@ def process_text():
             'errorMessage': other_words_or_error_message,
         }
     else:
-        # It's a list of other words
         response_data = {
             'terminal_symbols': terminal_symbols,
             'nonterminal_symbols': nonterminal_symbols,
@@ -297,11 +293,10 @@ def process_text():
             'language': list(language),
             'shortest_words': shortest_words,
             'other_words': other_words_or_error_message,
-            'language_representation': detected_pattern,
             'words_with_rules': words_and_rules,
-            'generationSteps': generation_steps
+            'generationSteps': generation_steps,
+            'language_representation': detected_pattern,
     }
-
 
     return jsonify(response_data)
 
